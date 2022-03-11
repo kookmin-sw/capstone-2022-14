@@ -13,17 +13,19 @@ def create_app(config_filename=config_dir):
     app = Flask(__name__)
     app.config.from_pyfile(config_filename)
     app.config["JSON_AS_ASCII"] = False
-    app.config.update({
-        "APISPEC_SPEC": APISpec(
-            title="CRUD api",
-            version="v1",
-            openapi_version="2.0.0",
-            plugins=[MarshmallowPlugin()],
-        ),
-        "APISPEC_SWAGGER_URL": "/docs.json",
-        "APISPEC_SWAGGER_UI_URL": "/docs/"
-    })
-    # app.static_folder = os.path.abspath(app.config["IMAGE_FILE_PATH"])
+    app.config.update(
+        {
+            "APISPEC_SPEC": APISpec(
+                title="CRUD api",
+                version="v1",
+                openapi_version="2.0.0",
+                plugins=[MarshmallowPlugin()],
+            ),
+            "APISPEC_SWAGGER_URL": "/docs.json",
+            "APISPEC_SWAGGER_UI_URL": "/docs/",
+        }
+    )
+    app.static_folder = os.path.abspath(app.config["FILE_PATH"])
     docs = FlaskApiSpec(app)
 
     with app.app_context():
@@ -39,5 +41,6 @@ def create_app(config_filename=config_dir):
             }
 
     return app
+
 
 app = create_app()
