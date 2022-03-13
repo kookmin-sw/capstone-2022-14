@@ -2,5 +2,6 @@
     "editor.defaultFormatter": "ms-python.python",
     "editor.formatOnSave": true,
     "python.formatting.provider": "black",
-    "python.linting.enabled": false
+    "python.linting.enabled": false,
+    "editor.formatOnPaste": false
 }
