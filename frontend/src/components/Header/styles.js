@@ -1,7 +1,20 @@
 import styled from 'styled-components';
 
+export const HeaderWrapper = styled.div`
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const Title = styled.h1`
+  margin-left: 2rem;
+  a {
+    color: Black;
+  }
+`;
+
 export const Container = styled.div`
-  padding: 2% 3%;
   width: 100%;
   height: 100%;
   overflow-y: auto;
@@ -10,28 +23,16 @@ export const Container = styled.div`
   }
 `;
 
-export const Title = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  margin-top: 10rem;
-  & > * {
-    line-height: 1.45;
-  }
-  font-size: 5rem;
-`;
-
 export const Search = styled.div`
   align-items: center;
   text-align: center;
-  margin-top: 5rem;
   input {
+    width: 500px;
     flex: 1;
     border: 0.1rem solid #d3d6e2;
     border-radius: 1rem;
-    font-size: 1.4rem;
-    padding: 1rem;
+    font-size: 1.2rem;
+    padding: 0.5rem;
     margin: 0.5rem;
     align-items: left;
   }
@@ -40,9 +41,9 @@ export const Search = styled.div`
     cursor: pointer;
     border: 0;
     border-radius: 1rem;
-    padding: 1.2rem 0.2rem;
+    padding: 0.3rem;
     margin: 0 0.3rem;
     color: #fff;
-    font-size: 1.2rem;
+    font-size: 1rem;
   }
 `;
