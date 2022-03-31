@@ -1,37 +1,63 @@
-## Welcome to GitHub Pages
+## 중고물품 시세분석 서비스
 
-You can use the [editor on GitHub](https://github.com/kookmin-sw/cap-template/edit/master/index.md) to maintain and preview the content for your website in Markdown files.
+### 1. 프로젝트 소개
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+애플(전자제품) 제품을 중고거래 플랫폼에서 크롤링하여 중고 매물의 시세를 분석해주는 서비스
 
-### Markdown
+### 2. 소개 영상
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+추후 업데이트 예정
 
-```markdown
-Syntax highlighted code block
+### 3. 팀 소개
 
-# Header 1
-## Header 2
-### Header 3
+**이준석(팀장)**
 
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+```
+👨🏻‍💻****1680
+📧lgh009833@kookmin.ac.kr
+🔨Frontend
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+**이정우**
 
-### Jekyll Themes
+```
+👨🏻‍💻****1676
+📧lmwljw98@kookmin.ac.kr
+🔨Backend
+```
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/kookmin-sw/cap-template/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+**임준혁**
 
-### Support or Contact
+```
+👨🏻‍💻****1689
+📧onejajae@kookmin.ac.kr
+🔨Crawling
+```
 
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+### 4. 사용법
+
+- Backend
+
+```
+cd backend/server
+pip install -r requirements.txt
+python run.py
+```
+
+- Frontend
+
+```
+cd frontend/app
+npm i
+npm start
+```
+
+- Crawler
+
+```
+
+```
+
+### 5. 기타
+
+추후 업데이트 예정
