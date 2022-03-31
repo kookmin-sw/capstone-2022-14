@@ -15,8 +15,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Main />} />
           <Route path="/search/:keyword" element={<Search />} />
-          <Route path-="/iphone" element={<Iphone />} />
-          <Route path-="/ipad" element={<Ipad />} />
+          <Route path="/iphone" element={<Iphone />} />
+          <Route path="/ipad" element={<Ipad />} />
         </Routes>
         {/* <Footer /> */}
       </BrowserRouter>
