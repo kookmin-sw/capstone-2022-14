@@ -159,3 +159,6 @@ node_modules
 
 #delete yarn
 /yarn.lock
+
+# db data
+backend/db/data
