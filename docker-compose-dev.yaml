@@ -29,8 +29,7 @@ services:
         restart: always
         ports:
             # 임시 포트
-            - 8080:8080
-            # - 443:443
+            - 2000:80
         volumes:
             - ./frontend/build:/usr/share/nginx/html
             - ./proxy/nginx/conf.d:/etc/nginx/conf.d

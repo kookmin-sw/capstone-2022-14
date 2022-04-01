@@ -62,7 +62,7 @@ npm start
 
 - Run by Docker
 ```
-sudo docker-compose up --build -d
+sudo docker-compose -f docker-compose-dev.yaml up --build -d
 ```
 ---
 
