@@ -60,6 +60,10 @@ npm start
 
 ```
 
+- Run by Docker
+```
+sudo docker-compose up --build -d
+```
 ---
 
 ## 5. 기타
