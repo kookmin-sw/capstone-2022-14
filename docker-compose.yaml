@@ -1,0 +1,78 @@
+version: "3.7"
+services:
+    api:
+        build:
+            context: .
+            dockerfile: Dockerfile.api
+        container_name: capstone-api
+        depends_on:
+            - db
+        volumes:
+            - ./backend:/app
+
+    db:
+        image: mariadb:10.6.2
+        container_name: capstone-db
+        expose:
+            - "3333"
+        environment:
+            # MYSQL_DATABASE: server
+            MYSQL_ROOT_PASSWORD: backstart
+            TZ: Asia/Seoul
+            MYSQL_INITDB_SKIP_TZINFO: 1
+        volumes:
+            - ./database/data:/var/lib/mysql
+
+    nginx:
+        container_name: capstone-nginx
+        image: nginx:stable-alpine
+        restart: always
+        ports:
+            # 임시 포트
+            - 8080:8080
+            # - 443:443
+        volumes:
+            - ./frontend/build:/usr/share/nginx/html
+            - ./proxy/nginx/conf.d:/etc/nginx/conf.d
+            - ./proxy/nginx/log:/var/log/nginx/default
+            - ./proxy/certbot/conf:/etc/letsencrypt
+            - ./proxy/certbot/www:/var/www/certbot
+            - type: bind
+              source: ./proxy/nginx/nginx.conf
+              target: /etc/nginx/nginx.conf
+
+    elasticsearch:
+        image: elasticsearch:7.17.1
+        container_name: elasticsearch
+        ports:
+            - "9200:9200"
+            - "9300:9300"
+        environment:
+            - discovery.type=single-node
+            - TZ=Asia/Seoul
+        volumes:
+            - ./data:/usr/share/elasticsearch/data
+        ulimits:
+            memlock:
+                soft: -1
+                hard: -1
+        networks:
+            - elastic
+
+    kibana:
+        image: kibana:7.17.1
+        container_name: kibana
+        ports:
+            - "5601:5601"
+        environment:
+            - ELASTICSEARCH_URL=http://elasticsearch:9200
+            - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+            - TZ=Asia/Seoul
+        depends_on:
+            - elasticsearch
+        networks:
+            - elastic
+
+networks:
+    elastic:
+        driver: bridge
