@@ -10,10 +10,3 @@ body {
 *:after {
   box-sizing: inherit;
 }
-
-a {
-  text-decoration: none !important;
-}
-a:hover {
-  text-decoration: none !important;
-}
