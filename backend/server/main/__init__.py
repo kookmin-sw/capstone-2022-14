@@ -6,7 +6,6 @@ from flask_apispec.extension import FlaskApiSpec
 
 base_dir = os.getcwd()
 config_dir = os.path.abspath(os.path.join(base_dir, "server", "main", "server.cfg"))
-# docs = FlaskApiSpec()
 
 
 def create_app(config_filename=config_dir):
@@ -29,9 +28,11 @@ def create_app(config_filename=config_dir):
     docs = FlaskApiSpec(app)
 
     with app.app_context():
-        from server.main.controllers.test import test_bp
+        from server.main.controllers.admin import admin_bp
+        from server.main.controllers.search import search_bp
 
-        app.register_blueprint(test_bp)
+        app.register_blueprint(search_bp)
+        app.register_blueprint(admin_bp)
         docs.register_existing_resources()
 
         # 스웨거에서 options 제거
