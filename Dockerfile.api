@@ -7,5 +7,5 @@ RUN apt update
 COPY backend/. .
 RUN pip install -r ./requirements.txt
 ENV PYTHONUNBUFFERED=0
-EXPOSE 6000
-CMD ["gunicorn", "-b", ":6000", "app:application", "-k", "gevent", "--worker-connections", "4096"]
+EXPOSE 50000
+CMD ["gunicorn", "-b", ":50000", "app:application", "-k", "gevent", "--worker-connections", "4096"]
