@@ -1,6 +1,10 @@
+import sys, time
+
 from selenium import webdriver
-import time
 from elasticsearch import Elasticsearch
+
+
+search_keyword = sys.argv[1]
 
 # Print iterations progress
 def printProgressBar(iteration, total, prefix="", suffix="", decimals=1, length=100, fill="█", printEnd="\r"):
@@ -25,8 +29,11 @@ def printProgressBar(iteration, total, prefix="", suffix="", decimals=1, length=
         print()
 
 
-def joongonara(keyword):
-    url = "https://m.joongna.com/search-list/product?searchword={}".format(keyword)
+def joongonara(keyword, index_name):
+    # n일 이내 상품
+    date_filter = 7
+
+    url = "https://m.joongna.com/search-list/product?searchword={}&dateFilter={}".format(keyword, date_filter)
 
     options = webdriver.ChromeOptions()
     options.add_argument("headless")
@@ -39,47 +46,35 @@ def joongonara(keyword):
         .text.replace(",", "")
         .split()[1][:-1]
     )
-    print("총 개수:", count)
 
-    products = []
+    print(keyword, "총 개수:", count)
+
     links = []
+    products = []
 
-    for _ in range((count // 11)):
+    for _ in range((count // 12)):
         driver.find_element_by_xpath('//*[@id="root"]/div[1]/section/article/button').click()
         time.sleep(1)
 
-    for i in range(1, count):
-        item = {}
-
-        product_name = driver.find_element_by_xpath(
-            '//*[@id="root"]/div[1]/section/article/div/div[' + str(i) + "]/div/div/a/span"
-        ).text
-
-        price = driver.find_element_by_xpath(
-            '//*[@id="root"]/div[1]/section/article/div/div[' + str(i) + "]/div/div/a/p"
-        ).text
-
-        link = driver.find_element_by_xpath(
-            '//*[@id="root"]/div[1]/section/article/div/div[' + str(i) + "]/div/a"
-        ).get_attribute("href")
-
-        item["product_name"] = product_name
-        item["price"] = price
-        item["link"] = link
-
-        products.append(item)
-        links.append(link)
+    links_list = driver.find_elements_by_class_name("ProductItemV2_itemImage__3fgX3")
+    for link in links_list:
+        links.append(link.get_attribute("href"))
 
     driver.quit()
 
-    printProgressBar(0, count, prefix="Progress:", suffix="Complete", length=50)
+    printProgressBar(0, len(links), prefix="Progress:", suffix="Complete", length=50)
     for idx, link in enumerate(links):
+        item = {}
         options = webdriver.ChromeOptions()
         options.add_argument("headless")
         driver = webdriver.Chrome("./driver/chromedriver", options=options)
 
         driver.get(link)
         driver.implicitly_wait(1000)
+
+        product_name = driver.find_element_by_xpath('//*[@id="root"]/div[1]/div[2]/div[2]/div/p').text
+
+        price = driver.find_element_by_xpath('//*[@id="root"]/div[1]/div[2]/div[2]/div/div/p/strong').text
 
         img = driver.find_element_by_xpath(
             '//*[@id="root"]/div[1]/div[2]/div[1]/div/div/div[2]/div/img'
@@ -94,29 +89,66 @@ def joongonara(keyword):
             '//*[@id="root"]/div[1]/div[2]/div[2]/div/div/div/p[2]/span'
         ).text
 
-        products[idx]["img"] = img
-        products[idx]["description"] = description
-        products[idx]["view_count"] = view_count
-        driver.quit()
-        printProgressBar(idx + 1, count, prefix="Progress:", suffix="Complete", length=50)
+        item["product_name"] = product_name
+        item["price"] = price
+        item["link"] = link
+        item["img"] = img
+        item["description"] = description
+        item["view_count"] = view_count
 
-    # print(products)
+        # print(item)
+        products.append(item)
+
+        driver.quit()
+        printProgressBar(idx + 1, len(links), prefix="Progress:", suffix="Complete", length=50)
 
     # 엘라스틱 서치 IP주소와 포트(기본:9200)로 연결한다
     es = Elasticsearch("http://127.0.0.1:9200/")  # 환경에 맞게 바꿀 것
 
-    index_name = "products"
+    # 기존 인덱스 데이터 삭제
+    es.indices.delete(index=index_name, ignore=[400, 404])
+
+    body = {
+        "settings": {
+            "index": {
+                "analysis": {
+                    "tokenizer": {
+                        "nori_tokenizer": {
+                            "type": "nori_tokenizer",
+                        },
+                    },
+                    "analyzer": {
+                        # nori 분석기 설정
+                        "nori_korean": {"type": "custom", "tokenizer": "nori_tokenizer"},
+                    },
+                }
+            }
+        },
+        "mappings": {
+            "properties": {
+                "product_name": {
+                    "type": "text",
+                    # name에 nori 형태소 분석기 설정
+                    "analyzer": "nori_korean",
+                },
+                "description": {
+                    "type": "text",
+                },
+            }
+        },
+    }
+    es.indices.create(index=index_name, body=body)
 
     for prod in products:
+        # print(prod)
         es.index(index=index_name, body=prod)
     es.indices.refresh(index=index_name)
 
-    # 상품명에 '노트북'을 검색한다
-    results = es.search(
-        index=index_name, body={"from": 0, "size": 10, "query": {"match": {"goods_name": "맥북"}}}
-    )
-    for result in results["hits"]["hits"]:
-        print("score:", result["_score"], "source:", result["_source"])
+    # results = es.search(index=index_name, body={"from": 0, "size": 10, "query": {"match_all": {}}})
+    # for result in results["hits"]["hits"]:
+    #     print("score:", result["_score"], "source:", result["_source"])
 
 
-joongonara("맥북")
+if __name__ == "__main__":
+    index_name = "products"
+    joongonara(search_keyword, index_name)
