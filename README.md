@@ -57,12 +57,21 @@ npm start
 - Crawler
 
 ```
-
+cd backend/crawler
+python joongonara.py "키워드"
 ```
 
 - Run by Docker
 ```
 sudo docker-compose -f docker-compose-dev.yaml up --build -d
+
+
+# ES plugin 설치
+
+$ docker ps
+$ docker exec -it <ES_container_id> /bin/bash
+$ cd /usr/share/elasticsearch/bin/ 
+$ ./elasticsearch-plugin install analysis-nori
 ```
 ---
 
