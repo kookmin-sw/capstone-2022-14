@@ -2,6 +2,7 @@ from daangn import DaangnCrawler
 from bunjang import BunjangCrawler
 
 import json
+from elasticsearch import Elasticsearch
 
 
 class Crawler:
@@ -20,9 +21,11 @@ class Crawler:
 
 if __name__ == "__main__":
     daangn = DaangnCrawler()
+    bunjang = BunjangCrawler()
     crawler = Crawler()
 
     crawler.add_crawler(daangn)
+    crawler.add_crawler(bunjang)
 
     testdata = crawler.crawl("맥북", 2)
     jsondata = map(lambda data: data.__dict__, testdata)
