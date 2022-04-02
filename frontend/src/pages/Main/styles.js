@@ -1,42 +1,38 @@
 import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
 
 export const Container = styled.div`
-  width: 100%;
-  height: 100%;
-  overflow-y: auto;
-  &::-webkit-scrollbar {
-    display: none;
-  }
+  margin: 10rem 2rem;
 `;
 
 export const ListWrapper = styled.div`
   display: flex;
   justify-content: space-evenly;
   flex-flow: row wrap;
-  margin-top: 5rem;
 `;
 
-export const ProductItem = styled.div`
+export const ProductItem = styled(NavLink)`
   display: flex;
   flex-direction: column;
   align-items: center;
   border: 0.1rem solid rgb(228, 228, 228);
   border-radius: 1rem;
   padding: 0.8rem;
+  cursor: pointer;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
+  transition: all 0.5s;
+  text-decoration: none;
+  color: black;
+  font-weight: 500;
 
-  :hover {
-    background-color: rgb(220, 220, 220);
+  &:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    -webkit-transform:scale(1.1); 
   }
 `;
 
 export const ProductImg = styled.img`
   width: 120px;
   height: 78px;
-`;
-
-export const ProductName = styled.div`
-  margin-top: 0.3rem;
-  color: black;
-  font-weight: 600;
-  text-decoration-line: none;
+  margin-bottom: 5px;
 `;
