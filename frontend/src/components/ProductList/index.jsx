@@ -1,8 +1,15 @@
 import React from 'react';
 import * as Style from './styles';
 import { productSub } from './product';
+import productRequest from '../../api/productRequest';
 
 function ProductList({ keyword }) {
+  const clickEvent = async e => {
+    await productRequest
+      .getResponse(e.target.innerText)
+      .then(res => console.log(res));
+  };
+
   return (
     <Style.Container>
       {keyword !== 'iphone' ? (
@@ -17,7 +24,9 @@ function ProductList({ keyword }) {
             return (
               <Style.IphoneContainer key={index}>
                 {gen.map((item, index) => (
-                  <Style.ItemBtn key={index}>{item}</Style.ItemBtn>
+                  <Style.ItemBtn key={index} onClick={clickEvent}>
+                    {item}
+                  </Style.ItemBtn>
                 ))}
               </Style.IphoneContainer>
             );
