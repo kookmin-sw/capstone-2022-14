@@ -35,3 +35,12 @@ export const ProductImg = styled.img`
   height: 78px;
   margin-bottom: 5px;
 `;
+
+export const ScrollToTop = styled.button`
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+`;

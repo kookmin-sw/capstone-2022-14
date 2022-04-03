@@ -38,7 +38,7 @@ Email: lmwljw98@kookmin.ac.kr
 
 ## 4. 사용법
 
-- Backend
+-   Backend
 
 ```
 cd backend/server
@@ -46,7 +46,7 @@ pip install -r requirements.txt
 python run.py
 ```
 
-- Frontend
+-   Frontend
 
 ```
 cd frontend/app
@@ -54,25 +54,40 @@ npm i
 npm start
 ```
 
-- Crawler
+-   Crawler
 
 ```
 cd backend/crawler
-python joongonara.py "키워드"
+python crawler.py
+
+# python joongonara.py "키워드" (아직 미사용)
 ```
 
-- Run by Docker
+-   Run by Docker (통합 환경 실행)
+
 ```
 sudo docker-compose -f docker-compose-dev.yaml up --build -d
 
-
 # ES plugin 설치
 
-$ docker ps
-$ docker exec -it <ES_container_id> /bin/bash
-$ cd /usr/share/elasticsearch/bin/ 
-$ ./elasticsearch-plugin install analysis-nori
+docker ps
+
+docker exec -it <ES_container_id> /bin/bash
+
+cd /usr/share/elasticsearch/bin/
+
+./elasticsearch-plugin install analysis-nori
+
+
+* 페이지
+http://127.0.0.1:2000
+
+* API 문서
+http://127.0.0.1:2000/docs
+
+backend/crawler/crawler.py를 통해 크롤링 데이터 축적 후 API 사용 가능
 ```
+
 ---
 
 ## 5. 기타
