@@ -11,7 +11,6 @@ export const Container = styled.div`
 export const IphoneContainer = styled.div`
   display: flex;
   justify-content: start;
-  margin-bottom: 2rem;
 `;
 
 export const IphoneWrapper = styled.div`
@@ -22,7 +21,7 @@ export const IphoneWrapper = styled.div`
 `;
 
 export const ItemBtn = styled.button`
-  margin: 0 2rem;
+  margin: 1rem 2rem;
   border: none;
   font-size: large;
   padding: 1rem 2rem;

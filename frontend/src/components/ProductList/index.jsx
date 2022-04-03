@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import * as Style from './styles';
 import { productSub } from './product';
+
 import SearchAPI from '../../api/search';
 import SearchResult from '../SearchResult';
 
