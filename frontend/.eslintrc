@@ -10,5 +10,5 @@
     ],
     "quotes": ["error", "single", { "avoidEscape": true }]
   },
-  "parser": "babel-eslint"
+  "parser": "@babel/eslint-parser"
 }
