@@ -26,7 +26,7 @@ export const ProductItem = styled(NavLink)`
 
   &:hover {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    -webkit-transform: scale(1.1); 
+    -webkit-transform: scale(1.1);
   }
 `;
 
