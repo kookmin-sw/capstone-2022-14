@@ -21,7 +21,7 @@ def result(query):
     # 인덱스 지정
     index_name = "products"
 
-    search_query = {"from": 0, "size": 10, "query": {"match": {"product_name": query}}}
+    search_query = {"from": 0, "size": 10, "query": {"match": {"title": query}}}
 
     # 키워드 검색
     results = es.search(index=index_name, body=search_query)

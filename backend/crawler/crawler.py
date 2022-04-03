@@ -27,9 +27,60 @@ if __name__ == "__main__":
     crawler.add_crawler(daangn)
     crawler.add_crawler(bunjang)
 
-    testdata = crawler.crawl("맥북", 2)
+    crawl_keyword = "맥북"
+
+    testdata = crawler.crawl(crawl_keyword, 2)
     jsondata = map(lambda data: data.__dict__, testdata)
+
+    # 엘라스틱 서치 IP주소와 포트(기본:9200)로 연결한다
+    es = Elasticsearch("http://127.0.0.1:9200/")  # 환경에 맞게 바꿀 것
+
+    body = {
+        "settings": {
+            "index": {
+                "analysis": {
+                    "tokenizer": {
+                        "nori_tokenizer": {
+                            "type": "nori_tokenizer",
+                        },
+                    },
+                    "analyzer": {
+                        # nori 분석기 설정
+                        "nori_korean": {"type": "custom", "tokenizer": "nori_tokenizer"},
+                    },
+                }
+            }
+        },
+        "mappings": {
+            "properties": {
+                "keyword": {
+                    "type": "text",
+                    # name에 nori 형태소 분석기 설정
+                    "analyzer": "nori_korean",
+                },
+                "title": {
+                    "type": "text",
+                    # name에 nori 형태소 분석기 설정
+                    "analyzer": "nori_korean",
+                },
+                "desc": {
+                    "type": "text",
+                    "analyzer": "nori_korean",
+                },
+            }
+        },
+    }
+
+    index_name = "products"
+
+    try:
+        es.indices.create(index=index_name, body=body)
+    except:
+        pass
 
     for data in jsondata:
         # insert data to db using json.dumps
-        print(data)
+        # print(json.dumps(data, ensure_ascii=False))
+        es.index(index=index_name, body=data)
+
+    es.indices.refresh(index=index_name)

@@ -45,6 +45,7 @@ class BunjangCrawler:
         return item
 
 
-a = BunjangCrawler()
-b = a.crawl_data("맥북", 2)
-print(b)
+if __name__ == "__main__":
+    a = BunjangCrawler()
+    b = a.crawl_data("맥북", 2)
+    print(b)
