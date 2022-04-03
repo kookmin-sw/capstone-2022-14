@@ -6,11 +6,13 @@ import {
   ImageListItemBar,
 } from '@mui/material';
 import React, { useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useParams } from 'react-router-dom';
+import ProductList from '../../components/ProductList';
 import { Container, ListWrapper, ProductItem, ProductImg } from './styles';
 
 const Main = () => {
   const [selected, setSelected] = useState('');
+  const { keyword } = useParams();
   const appleProducts = [
     {
       param: 'mac',
@@ -66,6 +68,11 @@ const Main = () => {
           );
         })}
       </ListWrapper>
+      {keyword ? (
+        <>
+          <ProductList keyword={keyword} />
+        </>
+      ) : null}
       <Outlet />
     </Container>
   );
