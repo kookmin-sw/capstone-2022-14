@@ -8,14 +8,18 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 import Button from '@mui/material/Button';
 
 const Header = () => {
+  const navigate = useNavigate();
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="fixed">
-        <Toolbar sx={{ backgroundColor: 'white' }}>
+        <Toolbar sx={{ backgroundColor: 'white', cursor: 'pointer' }}>
           <Typography
             variant="h6"
             component="div"
             sx={{ flexGrow: 1, color: '#0c0c0c', fontWeight: 900 }}
+            onClick={() => {
+              navigate('/');
+            }}
           >
             애플나라
           </Typography>
