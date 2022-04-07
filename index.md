@@ -102,6 +102,12 @@ backend/crawler/crawler.py를 통해 크롤링 데이터 축적 후 API 사용 �
 
 ---
 
-## 6. 기타
+## 6. 문서
 
-추후 업데이트 예정
+-   중간보고서
+
+    -   [바로가기](https://github.com/kookmin-sw/capstone-2022-14/blob/master/docs/팀14-중간보고서.pdf)
+
+-   중간발표자료
+
+    -   [바로가기](https://github.com/kookmin-sw/capstone-2022-14/blob/master/docs/팀14-중간발표자료.pdf)
