@@ -50,7 +50,7 @@ class DaangnCrawler:
             item.price = article.find("p", "article-price").text
 
             url = article.find("img")["src"].split("?q")[0]
-            item.pictures = [url]
+            item.pictures = [f"{item.pid}.jpg"]
             urllib.request.urlretrieve(url, f"image/daangn_image/{item.pid}.jpg")
 
             items.append(item)
