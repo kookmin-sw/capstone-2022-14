@@ -1,4 +1,5 @@
 import requests
+import urllib.request
 
 
 class BunjangItem:
@@ -28,7 +29,6 @@ class BunjangCrawler:
                 res = requests.get(f"https://api.bunjang.co.kr/api/1/product/{pid}/detail_info.json?version=4")
                 item_info = res.json()["item_info"]
                 items.append(self.data_process(item_info, keyword))
-                break
 
         return items
 
@@ -36,16 +36,19 @@ class BunjangCrawler:
         item = BunjangItem()
         item.keyword = keyword
 
+        item.pid = item_info["pid"]
         item.title = item_info["name"]
         item.desc = item_info["description"] + item_info["description_for_detail"]
-        item.price = item_info["price"]
-
-        print(item.__dict__)
+        item.price = int(item_info["price"])
+        item.pictures = self.__get_image(item_info["product_image"], item_info["image_count"], item.pid)
 
         return item
 
+    def __get_image(self, url_base, image_count, pid):
+        images = []
+        for i in range(1, image_count + 1):
+            img_url = url_base.replace("{cnt}", str(i))
+            urllib.request.urlretrieve(img_url, f"image/bunjang_image/{pid}_{i}.jpg")
+            images.append(f"{pid}_{i}.jpg")
 
-if __name__ == "__main__":
-    a = BunjangCrawler()
-    b = a.crawl_data("맥북", 2)
-    print(b)
+        return images
