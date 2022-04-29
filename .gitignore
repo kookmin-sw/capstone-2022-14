@@ -163,3 +163,5 @@ node_modules
 backend/db/data
 database/
 data/
+
+backend/crawler/image

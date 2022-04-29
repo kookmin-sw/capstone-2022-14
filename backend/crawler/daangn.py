@@ -1,5 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
+import urllib.request
+import os
 
 
 class DaangnItem:
@@ -28,6 +30,11 @@ class DaangnCrawler:
         return items
 
     def data_process(self, html, keyword):
+        path = "./image/daangn_image/"
+
+        if not os.path.exists(path):
+            os.makedirs(path)
+
         bs = BeautifulSoup(html, "lxml")
         articles = bs.find_all("article")
 
@@ -36,9 +43,15 @@ class DaangnCrawler:
             item = DaangnItem()
             item.keyword = keyword
 
+            item.pid = article.find("a", "flea-market-article-link")["href"].split("/articles/")[1]
+            # print(item.pid)
             item.title = article.find("span", "article-title").text
             item.desc = article.find("span", "article-content").text
             item.price = article.find("p", "article-price").text
+
+            url = article.find("img")["src"].split("?q")[0]
+            item.pictures = [url]
+            urllib.request.urlretrieve(url, f"image/daangn_image/{item.pid}.jpg")
 
             items.append(item)
 
