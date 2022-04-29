@@ -44,10 +44,9 @@ class DaangnCrawler:
             item.keyword = keyword
 
             item.pid = article.find("a", "flea-market-article-link")["href"].split("/articles/")[1]
-            # print(item.pid)
             item.title = article.find("span", "article-title").text
             item.desc = article.find("span", "article-content").text
-            item.price = article.find("p", "article-price").text
+            item.price = self.__parse_price(article.find("p", "article-price").text)
 
             url = article.find("img")["src"].split("?q")[0]
             item.pictures = [f"{item.pid}.jpg"]
@@ -56,3 +55,6 @@ class DaangnCrawler:
             items.append(item)
 
         return items
+
+    def __parse_price(self, price_text):
+        return int(price_text.strip().replace("원", "").replace(",", ""))
