@@ -1,5 +1,6 @@
 import requests
 import urllib.request
+import os
 
 
 class BunjangItem:
@@ -45,7 +46,12 @@ class BunjangCrawler:
         return item
 
     def __get_image(self, url_base, image_count, pid):
+        path = "./image/daangn_image/"
+        if not os.path.exists(path):
+            os.makedirs(path)
+
         images = []
+
         for i in range(1, image_count + 1):
             img_url = url_base.replace("{cnt}", str(i))
             urllib.request.urlretrieve(img_url, f"image/bunjang_image/{pid}_{i}.jpg")
