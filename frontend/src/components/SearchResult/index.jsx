@@ -6,6 +6,7 @@ function SearchResult({ result }) {
   const invisibleRef = useRef();
   const [modalOn, setModalOn] = useState(false);
   const [detail, setDetail] = useState({});
+  const [currentQuery, setCurrentQuery] = useState('');
 
   function changeMarketName(name) {
     switch (name) {

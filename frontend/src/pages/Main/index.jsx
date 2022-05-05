@@ -1,12 +1,5 @@
-import {
-  Box,
-  Grid,
-  ImageList,
-  ImageListItem,
-  ImageListItemBar,
-} from '@mui/material';
 import React, { useState, useEffect } from 'react';
-import { Outlet, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import ProductList from '../../components/ProductList';
 import {
   Container,
@@ -112,7 +105,6 @@ const Main = () => {
           <ProductList keyword={keyword} />
         </>
       ) : null}
-      <Outlet />
     </Container>
   );
 };
