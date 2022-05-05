@@ -73,6 +73,7 @@ export const CloseBtn = styled.button`
   padding: 1rem 2rem;
   font-size: 1.7rem;
   color: white;
+  cursor: pointer;
   border-radius: 2rem;
   background-color: #777777;
 `;
