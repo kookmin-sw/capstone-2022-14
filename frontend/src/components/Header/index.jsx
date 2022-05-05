@@ -16,21 +16,12 @@ const style = {
 
 const Header = () => {
   const navigate = useNavigate();
-  const [signinOpen, setSigninOpen] = useState(false);
-  const handleSigninOpen = () => setSigninOpen(true);
-  const handleSigninClose = () => setSigninOpen(false);
-  const [signupOpen, setSignupOpen] = useState(false);
-  const handleSignupOpen = () => setSignupOpen(true);
-  const handleSignupClose = () => setSignupOpen(false);
 
-  const handleSigninSubmit = e => {
-    console.log(e);
-  };
-  const handleSignupSubmit = e => {
-    console.log(e);
-  };
-
-  return <Style.HeaderWrapper>hello</Style.HeaderWrapper>;
+  return (
+    <Style.HeaderWrapper onClick={() => navigate('/')}>
+      헤더 사진 필요
+    </Style.HeaderWrapper>
+  );
 };
 
 export default Header;
