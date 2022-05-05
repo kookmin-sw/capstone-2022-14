@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
-import Detail from './detail';
 import * as Style from './styles';
-import { useNavigate } from 'react-router-dom';
+import Modal from './Modal';
 
 function SearchResult({ result }) {
-  // console.log(result);
-  const navigate = useNavigate();
   const invisibleRef = useRef();
+  const [modalOn, setModalOn] = useState(false);
+  const [detail, setDetail] = useState({});
 
   function changeMarketName(name) {
     switch (name) {
@@ -20,10 +19,8 @@ function SearchResult({ result }) {
   }
 
   const ClickResult = (source, e) => {
-    // if(e.target.nextSibling.nodeName === '')
-    const a = document.createElement('div');
-    a.innerHTML = source.desc;
-    e.target.append(a);
+    setModalOn(!modalOn);
+    setDetail(source);
   };
 
   useEffect(() => {
@@ -48,6 +45,7 @@ function SearchResult({ result }) {
           </>
         ))}
       </Style.ResultWrapper>
+      {modalOn && <Modal detail={detail} onClose={() => setModalOn(false)} />}
     </>
   );
 }
