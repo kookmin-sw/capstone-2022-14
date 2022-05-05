@@ -67,6 +67,8 @@ if __name__ == "__main__":
                     "type": "text",
                     "analyzer": "nori_korean",
                 },
+                "price": {"type": "integer"},
+                "images": {"type": "keyword", "fields": {"type": "keyword"}},
             }
         },
     }
