@@ -1,7 +1,9 @@
 import { Button } from '@mui/material';
 import styled from 'styled-components';
 
-export const Result = styled(Button)`
+export const ResultWrapper = styled.ul``;
+
+export const Result = styled.li`
   display: flex;
   flex-direction: column;
   line-height: 1;
@@ -11,7 +13,7 @@ export const Result = styled(Button)`
   border: 0;
   border-radius: 1rem;
   padding: 1.2rem 1.2rem;
-  margin: 0 3rem;
+  margin: 0.5rem 3rem;
   font-size: 1.2rem;
 `;
 

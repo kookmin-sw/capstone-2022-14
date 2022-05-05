@@ -4,13 +4,17 @@ import { productSub } from './product';
 
 import SearchAPI from '../../api/search';
 import SearchResult from '../SearchResult';
+import PriceChart from '../PriceChart';
 
 function ProductList({ keyword }) {
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState(null);
+  const [curQuery, setCurQuery] = useState('');
 
   const search = async query => {
     const response = await SearchAPI.searchQuery(query);
     setProducts(response.data);
+    setCurQuery(query);
+    if (response.data.length === 0) alert('매물이 없습니다.');
   };
 
   return (
@@ -18,9 +22,9 @@ function ProductList({ keyword }) {
       <Style.Container>
         {keyword !== 'iphone' ? (
           <>
-            {productSub[keyword].map(item => (
+            {productSub[keyword].map((item, i) => (
               <Style.ItemBtn
-                key={item}
+                key={i}
                 onClick={() => {
                   search(item);
                 }}
@@ -31,9 +35,9 @@ function ProductList({ keyword }) {
           </>
         ) : (
           <>
-            {productSub[keyword].map((gen, index) => {
+            {productSub[keyword].map((gen, i) => {
               return (
-                <Style.IphoneContainer key={index}>
+                <Style.IphoneContainer key={i}>
                   {gen.map((item, index) => (
                     <Style.ItemBtn
                       key={index}
@@ -50,7 +54,12 @@ function ProductList({ keyword }) {
           </>
         )}
       </Style.Container>
-      <SearchResult result={products} />
+      {productSub[keyword].includes(curQuery) && products.length !== 0 ? (
+        <>
+          <PriceChart />
+          <SearchResult result={products} />
+        </>
+      ) : null}
     </>
   );
 }
