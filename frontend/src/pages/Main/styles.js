@@ -46,6 +46,7 @@ export const ProductItem = styled(NavLink)`
   transition: all 0.5s;
   text-decoration: none;
   color: black;
+  font-size: 0.9rem;
   font-weight: 500;
 
   &:hover {
@@ -57,7 +58,7 @@ export const ProductItem = styled(NavLink)`
 export const ProductImg = styled.img`
   width: 120px;
   height: 78px;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 `;
 
 export const ScrollToTop = styled.button`

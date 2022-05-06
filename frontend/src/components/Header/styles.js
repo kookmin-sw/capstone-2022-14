@@ -8,7 +8,8 @@ export const HeaderWrapper = styled.div`
 `;
 
 export const HeaderHome = styled.h1`
-  width: 20%;
+  width: 200px;
+  font-family: 'NanumSquareExtraBold';
   display: flex;
   justify-content: center;
   align-items: center;
@@ -16,7 +17,6 @@ export const HeaderHome = styled.h1`
 `;
 
 export const HeaderContents = styled.div`
-  width: 90%;
   display: flex;
   flex-direction: row;
 `;

@@ -13,18 +13,17 @@ export const IphoneContainer = styled.div`
   justify-content: start;
 `;
 
-export const IphoneWrapper = styled.div`
-  margin-top: 8rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
 export const ItemBtn = styled.button`
   margin: 1rem 2rem;
-  border: none;
-  font-size: large;
+  font-size: 1rem;
+  border: 0;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
   padding: 1rem 2rem;
+  background-color: white;
   border-radius: 1rem;
   cursor: pointer;
+  transition: all 0.5s;
+  :hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
 `;
