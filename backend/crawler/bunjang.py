@@ -46,7 +46,7 @@ class BunjangCrawler:
         return item
 
     def __get_image(self, url_base, image_count, pid):
-        path = "./image/daangn_image/"
+        path = "./image/bunjang_image/"
         if not os.path.exists(path):
             os.makedirs(path)
 
