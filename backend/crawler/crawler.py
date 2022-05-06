@@ -74,6 +74,7 @@ if __name__ == "__main__":
     }
 
     index_name = "products"
+    # es.indices.delete(index=index_name, ignore=[400, 404])
 
     try:
         es.indices.create(index=index_name, body=body)
