@@ -56,7 +56,7 @@ class BunjangCrawler:
 
         for i in range(1, image_count + 1):
             img_url = url_base.replace("{cnt}", str(i))
-            # urllib.request.urlretrieve(img_url, f"image/bunjang_image/{pid}_{i}.jpg")
+            urllib.request.urlretrieve(img_url, f"image/bunjang_image/{pid}_{i}.jpg")
             images.append(f"{pid}_{i}.jpg")
 
         return images
