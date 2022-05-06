@@ -97,6 +97,7 @@ class DaangnCrawler:
             img.save(f"image/daangn_image/{pid}_{idx}.jpg", "jpeg")
             images.append(f"{pid}_{idx}.jpg")
             idx += 1
+        return images
 
     def __parse_date(self, date_text):
         pattern = re.compile("(\d{1,3})([가-힣]{1,3})")
