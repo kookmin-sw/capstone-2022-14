@@ -88,12 +88,14 @@ class DaangnCrawler:
 
         image_htmls = image_html.select("img")
         idx = 1
+        images = []
         for image_tag in image_htmls:
             # convert image to jpg and save image
             img_io = urllib.request.urlopen(image_tag["data-lazy"]).read()
             img_stream = io.BytesIO(img_io)
             img = Image.open(img_stream)
             img.save(f"image/daangn_image/{pid}_{idx}.jpg", "jpeg")
+            images.append(f"{pid}_{idx}.jpg")
             idx += 1
 
     def __parse_date(self, date_text):
