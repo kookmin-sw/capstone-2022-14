@@ -91,6 +91,9 @@ def result(query):
         minimum_price = min(price, minimum_price)
         # print("score:", result["_score"], "source:", result["_source"])
 
-    average_price = total_price // len(results["hits"]["hits"])
+    try:
+        average_price = total_price // len(results["hits"]["hits"])
+    except ZeroDivisionError:
+        pass
 
     return {"result": results["hits"]["hits"], "avg_price": average_price, "min_price": minimum_price}
