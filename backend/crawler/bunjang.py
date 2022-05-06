@@ -12,7 +12,7 @@ class BunjangItem:
         self.title = ""
         self.desc = ""
         self.price = ""
-        self.date = ""
+        self.date = ""  # unixtime
         self.pictures = []
         self.views = 0
         self.region = ""
@@ -30,8 +30,6 @@ class BunjangCrawler:
                 res = requests.get(f"https://api.bunjang.co.kr/api/1/product/{pid}/detail_info.json?version=4")
                 item_info = res.json()["item_info"]
                 items.append(self.data_process(item_info, keyword))
-                print(item_info)
-                break
 
         return items
 
@@ -44,6 +42,8 @@ class BunjangCrawler:
         item.desc = item_info["description"] + item_info["description_for_detail"]
         item.price = int(item_info["price"])
         item.pictures = self.__get_image(item_info["product_image"], item_info["image_count"], item.pid)
+        item.views = int(item_info["num_item_view"])
+        item.date = int(item_info["update_time"])
 
         return item
 
