@@ -2,7 +2,18 @@ import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 
 export const Container = styled.div`
-  margin: 10rem 2rem;
+  margin: 0 2rem;
+  animation: show 0.5s;
+  @keyframes show {
+    from {
+      margin-top: -30px;
+      opacity: 0;
+    }
+    to {
+      margin-top: 0px;
+      opacity: 1;
+    }
+  }
 `;
 
 export const ListWrapper = styled.div`
