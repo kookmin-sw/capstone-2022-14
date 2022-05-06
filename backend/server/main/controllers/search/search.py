@@ -76,13 +76,21 @@ def result(query):
 
     search_query = {
         "from": 0,
-        "size": 10,
+        "size": 100,
         "query": {"multi_match": {"query": products[query], "fields": ["title", "desc", "keyword"]}},
     }
 
+    total_price = 0
+    minimum_price = 9999999999
+
     # 키워드 검색
     results = es.search(index=index_name, body=search_query)
-    # for result in results["hits"]["hits"]:
-    #     print("score:", result["_score"], "source:", result["_source"])
+    for result in results["hits"]["hits"]:
+        price = result["_source"]["price"]
+        total_price += price
+        minimum_price = min(price, minimum_price)
+        # print("score:", result["_score"], "source:", result["_source"])
 
-    return results["hits"]["hits"]
+    average_price = total_price // len(results["hits"]["hits"])
+
+    return {"result": results["hits"]["hits"], "avg_price": average_price, "min_price": minimum_price}

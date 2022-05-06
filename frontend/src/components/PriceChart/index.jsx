@@ -12,7 +12,7 @@ const data = {
   ],
 };
 
-function PriceChart() {
+function PriceChart({ result }) {
   return (
     <Style.PriceChartWrapper>
       <Style.ChartWrapper>
@@ -20,8 +20,8 @@ function PriceChart() {
         <Chart type="line" data={data} />
       </Style.ChartWrapper>
       <Style.PriceWrapper>
-        <Style.PriceInfo>평균가 : </Style.PriceInfo>
-        <Style.PriceInfo>최저가 : </Style.PriceInfo>
+        <Style.PriceInfo>평균가 : {result.avg_price}</Style.PriceInfo>
+        <Style.PriceInfo>최저가 : {result.min_price}</Style.PriceInfo>
       </Style.PriceWrapper>
     </Style.PriceChartWrapper>
   );

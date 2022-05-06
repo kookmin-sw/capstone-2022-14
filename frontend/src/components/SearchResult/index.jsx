@@ -34,13 +34,13 @@ function SearchResult({ result }) {
     <>
       <Style.Scroll ref={invisibleRef} />
       <Style.ResultWrapper>
-        {result.map(e => (
+        {result['result'].map(e => (
           <>
             <Style.Result
               key={e._id}
               onClick={event => ClickResult(e._source, event)}
             >
-              {changeMarketName(e._source.market)} - {e._source.title} -
+              {changeMarketName(e._source.market)} - {e._source.title} -{' '}
               {e._source.price}
             </Style.Result>
           </>
