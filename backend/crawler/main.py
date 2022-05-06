@@ -39,7 +39,7 @@ if __name__ == "__main__":
     crawl_keywords = get_keywords()
     crawl_pages = 1  # TODO
 
-    # get crawling data
+    # get crawling data and insert
     for keyword in crawl_keywords:
         crawl_data = crawler.crawl(keyword, crawl_pages)
         crawl_data_json = map(lambda data: data.__dict__, crawl_data)
