@@ -118,10 +118,3 @@ class DaangnCrawler:
             date = now
 
         return int(date.timestamp())
-
-
-if __name__ == "__main__":
-    a = DaangnCrawler()
-    b = a.crawl_data("맥북", 1)
-    for i in b:
-        print(i.date)

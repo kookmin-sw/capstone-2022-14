@@ -60,8 +60,3 @@ class BunjangCrawler:
             images.append(f"{pid}_{i}.jpg")
 
         return images
-
-
-if __name__ == "__main__":
-    a = BunjangCrawler()
-    b = a.crawl_data("맥북", 1)
