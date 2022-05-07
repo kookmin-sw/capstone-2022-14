@@ -9,7 +9,7 @@ class EsStore:
         self.body = body
 
         if not self.es.indices.exists(index=index):
-            return self.es.indices.create(index=index_name, body=body)
+            self.es.indices.create(index=index_name, body=body)
 
     def insert(self, body):
         return self.es.index(index=self.index, body=body)
