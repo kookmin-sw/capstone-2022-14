@@ -44,7 +44,7 @@ if __name__ == "__main__":
     for keyword in crawl_keywords:
         print(f"{keyword} 크롤링 중..")
         crawl_data = crawler.crawl(keyword, crawl_pages)
-        crawl_data_json = map(lambda data: data.__dict__, crawl_data)
-        for data in crawl_data_json:
-            es_client.insert(data)
+        # crawl_data_json = map(lambda data: data.__dict__, crawl_data)
+        for data in crawl_data:
+            es_client.insert(data.__dict__, f"{data.market}_{data.pid}")
     es_client.refresh()

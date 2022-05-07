@@ -11,8 +11,8 @@ class EsStore:
         if not self.es.indices.exists(index=index):
             self.es.indices.create(index=index_name, body=body)
 
-    def insert(self, body):
-        return self.es.index(index=self.index, body=body)
+    def insert(self, body, id):
+        return self.es.index(index=self.index, body=body, id=id)
 
     def search(self, query):
         return self.es.search(index=self.index, body=query)
