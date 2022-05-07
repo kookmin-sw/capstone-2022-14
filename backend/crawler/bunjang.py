@@ -1,21 +1,13 @@
-import requests
+from itembase import ItemBase
 import urllib.request
+import requests
 import os
 
 
-class BunjangItem:
+class BunjangItem(ItemBase):
     def __init__(self):
+        super().__init__()
         self.market = "Bunjang"
-        self.url = ""
-        self.pid = ""
-        self.keyword = ""
-        self.title = ""
-        self.desc = ""
-        self.price = ""
-        self.date = ""
-        self.pictures = []
-        self.views = 0
-        self.region = ""
 
 
 class BunjangCrawler:
@@ -42,6 +34,8 @@ class BunjangCrawler:
         item.desc = item_info["description"] + item_info["description_for_detail"]
         item.price = int(item_info["price"])
         item.pictures = self.__get_image(item_info["product_image"], item_info["image_count"], item.pid)
+        item.views = int(item_info["num_item_view"])
+        item.date = int(item_info["update_time"])
 
         return item
 
