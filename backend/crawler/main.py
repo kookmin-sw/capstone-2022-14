@@ -2,9 +2,10 @@ from daangn import DaangnCrawler
 from bunjang import BunjangCrawler
 from crawler import Crawler
 
-from backend.db.esstore import EsStore
+import sys, os
 
-import sys
+sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
+from db.esstore import EsStore
 
 
 def get_keywords(file_name="keywords.txt"):
@@ -41,6 +42,7 @@ if __name__ == "__main__":
 
     # get crawling data and insert
     for keyword in crawl_keywords:
+        print(f"{keyword} 크롤링 중..")
         crawl_data = crawler.crawl(keyword, crawl_pages)
         crawl_data_json = map(lambda data: data.__dict__, crawl_data)
         for data in crawl_data_json:

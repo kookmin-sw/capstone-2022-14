@@ -1,5 +1,5 @@
 from elasticsearch import Elasticsearch
-from crawler.esconfig import *
+from db.esconfig import *
 
 
 class EsStore:

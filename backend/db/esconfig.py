@@ -4,18 +4,14 @@ index_name = "products"
 
 body = {
     "settings": {
-        "index": {
-            "analysis": {
-                "tokenizer": {
-                    "nori_tokenizer": {
-                        "type": "nori_tokenizer",
-                    },
-                },
-                "analyzer": {
-                    # nori 분석기 설정
-                    "nori_korean": {"type": "custom", "tokenizer": "nori_tokenizer"},
-                },
-            }
+        "analysis": {
+            "tokenizer": {
+                "nori_mixed": {"type": "nori_tokenizer", "decompound_mode": "mixed"},
+            },
+            "analyzer": {
+                # nori 분석기 설정
+                "nori_korean": {"type": "custom", "tokenizer": "nori_mixed"},
+            },
         }
     },
     "mappings": {
@@ -35,7 +31,6 @@ body = {
                 "analyzer": "nori_korean",
             },
             "price": {"type": "integer"},
-            "images": {"type": "keyword", "fields": {"type": "keyword"}},
         }
     },
 }
