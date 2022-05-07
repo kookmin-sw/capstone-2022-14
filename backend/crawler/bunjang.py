@@ -1,21 +1,13 @@
-import requests
+from itembase import ItemBase
 import urllib.request
+import requests
 import os
 
 
-class BunjangItem:
+class BunjangItem(ItemBase):
     def __init__(self):
+        super().__init__()
         self.market = "Bunjang"
-        self.url = ""
-        self.pid = ""
-        self.keyword = ""
-        self.title = ""
-        self.desc = ""
-        self.price = ""
-        self.date = ""  # unixtime
-        self.pictures = []
-        self.views = 0
-        self.region = ""
 
 
 class BunjangCrawler:

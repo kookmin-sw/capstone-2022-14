@@ -1,27 +1,18 @@
-from urllib import response
-import requests
+from itembase import ItemBase
 from bs4 import BeautifulSoup
+from PIL import Image
+import requests
 import urllib.request
 import os
 import datetime
 import re
 import io
-from PIL import Image
 
 
-class DaangnItem:
+class DaangnItem(ItemBase):
     def __init__(self):
+        super().__init__()
         self.market = "Daangn"
-        self.url = ""
-        self.pid = ""
-        self.keyword = ""
-        self.title = ""
-        self.desc = ""
-        self.price = ""
-        self.date = ""
-        self.pictures = []
-        self.views = 0
-        self.region = ""
 
 
 class DaangnCrawler:
