@@ -25,3 +25,12 @@ class EsStore:
 
     def refresh(self):
         return self.es.indices.refresh(index=self.index)
+
+    def count(self, keyword):
+        search_query = {
+            "query": {"multi_match": {"query": keyword, "fields": ["title", "desc", "keyword"]}},
+        }
+
+        results = self.es.count(index=index_name, body=search_query)
+
+        return results
