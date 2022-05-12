@@ -69,7 +69,7 @@ class DaangnCrawler:
         return items
 
     def __parse_price(self, price_text):
-        return int(price_text.strip().replace("만", "").replace("원", "").replace(",", ""))
+        return int(price_text.strip().replace("만", "00000").replace("원", "").replace(",", ""))
 
     def __get_image(self, image_html, pid):
         path = "./image/daangn_image/"
