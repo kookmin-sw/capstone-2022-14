@@ -41,7 +41,9 @@ services:
               target: /etc/nginx/nginx.conf
 
     elasticsearch:
-        image: elasticsearch:7.17.1
+        build:
+            context: .
+            dockerfile: Dockerfile.es
         container_name: elasticsearch
         ports:
             - "9200:9200"
