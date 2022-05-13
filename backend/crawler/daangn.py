@@ -25,7 +25,10 @@ class DaangnCrawler:
             page_items = self.__get_article_items(res.text)
             for item in page_items:
                 item.keyword = keyword
-                self.data_process(item, keyword)
+                try:
+                    self.data_process(item, keyword)
+                except:
+                    continue
                 # print(item.__dict__)
 
             items += page_items
