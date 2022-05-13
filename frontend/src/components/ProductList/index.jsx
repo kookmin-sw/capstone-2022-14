@@ -20,39 +20,18 @@ function ProductList({ keyword }) {
   return (
     <>
       <Style.Container>
-        {keyword !== 'iphone' ? (
-          <>
-            {productSub[keyword].map((item, i) => (
-              <Style.ItemBtn
-                key={i}
-                onClick={() => {
-                  search(item);
-                }}
-              >
-                {item}
-              </Style.ItemBtn>
-            ))}
-          </>
-        ) : (
-          <>
-            {productSub[keyword].map((gen, i) => {
-              return (
-                <Style.IphoneContainer key={i}>
-                  {gen.map((item, index) => (
-                    <Style.ItemBtn
-                      key={index}
-                      onClick={() => {
-                        search(item);
-                      }}
-                    >
-                      {item}
-                    </Style.ItemBtn>
-                  ))}
-                </Style.IphoneContainer>
-              );
-            })}
-          </>
-        )}
+        <>
+          {productSub[keyword].map((item, i) => (
+            <Style.ItemBtn
+              key={i}
+              onClick={() => {
+                search(item);
+              }}
+            >
+              {item}
+            </Style.ItemBtn>
+          ))}
+        </>
       </Style.Container>
       {productSub[keyword].includes(curQuery) && products.length !== 0 ? (
         <>

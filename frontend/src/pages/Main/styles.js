@@ -17,9 +17,22 @@ export const Container = styled.div`
 `;
 
 export const ListWrapper = styled.div`
-  display: flex;
-  justify-content: space-evenly;
-  flex-flow: row wrap;
+  display: grid;
+  grid-template-columns: repeat(6, 140px);
+  grid-gap: 2rem;
+  place-content: space-evenly space-evenly;
+  @media (max-width: 1047px) {
+    grid-template-rows: repeat(2, 140px);
+    grid-template-columns: repeat(3, 140px);
+    grid-gap: 2rem;
+    place-content: space-evenly space-evenly;
+  }
+  @media (max-width: 500px) {
+    grid-template-rows: repeat(3, 140px);
+    grid-template-columns: repeat(2, 140px);
+    grid-gap: 2rem;
+    place-content: space-evenly space-evenly;
+  }
 `;
 
 export const ProductItem = styled(NavLink)`
@@ -33,6 +46,7 @@ export const ProductItem = styled(NavLink)`
   transition: all 0.5s;
   text-decoration: none;
   color: black;
+  font-size: 0.9rem;
   font-weight: 500;
 
   &:hover {
@@ -44,7 +58,7 @@ export const ProductItem = styled(NavLink)`
 export const ProductImg = styled.img`
   width: 120px;
   height: 78px;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 `;
 
 export const ScrollToTop = styled.button`
