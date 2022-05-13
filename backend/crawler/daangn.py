@@ -69,7 +69,7 @@ class DaangnCrawler:
         return items
 
     def __parse_price(self, price_text):
-        return int(price_text.strip().replace("원", "").replace(",", ""))
+        return int(price_text.strip().replace("만", "0000").replace("원", "").replace(",", ""))
 
     def __get_image(self, image_html, pid):
         path = "./image/daangn_image/"
@@ -81,13 +81,16 @@ class DaangnCrawler:
         idx = 1
         images = []
         for image_tag in image_htmls:
-            # convert image to jpg and save image
-            img_io = urllib.request.urlopen(image_tag["data-lazy"]).read()
-            img_stream = io.BytesIO(img_io)
-            img = Image.open(img_stream)
-            img.save(f"image/daangn_image/{pid}_{idx}.jpg", "jpeg")
-            images.append(f"{pid}_{idx}.jpg")
-            idx += 1
+            try:
+                # convert image to jpg and save image
+                img_io = urllib.request.urlopen(image_tag["data-lazy"]).read()
+                img_stream = io.BytesIO(img_io)
+                img = Image.open(img_stream)
+                img.save(f"image/daangn_image/{pid}_{idx}.jpg", "jpeg")
+                images.append(f"{pid}_{idx}.jpg")
+                idx += 1
+            except:
+                pass
         return images
 
     def __parse_date(self, date_text):
