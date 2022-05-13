@@ -63,7 +63,10 @@ class DaangnCrawler:
             item.pid = article.find("a", "flea-market-article-link")["href"].split("/articles/")[1]
             item.title = article.find("span", "article-title").text
             item.desc = article.find("span", "article-content").text
-            item.price = self.__parse_price(article.find("p", "article-price").text)
+            try:
+                item.price = self.__parse_price(article.find("p", "article-price").text)
+            except:
+                continue
             items.append(item)
 
         return items
