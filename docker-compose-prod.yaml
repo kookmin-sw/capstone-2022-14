@@ -9,6 +9,8 @@ services:
             - db
         volumes:
             - ./backend:/app
+        networks:
+            - elastic
 
     db:
         image: mariadb:10.6.2
@@ -22,6 +24,8 @@ services:
             MYSQL_INITDB_SKIP_TZINFO: 1
         volumes:
             - ./database/data:/var/lib/mysql
+        networks:
+            - elastic
 
     nginx:
         container_name: capstone-nginx
@@ -39,6 +43,8 @@ services:
             - type: bind
               source: ./proxy/nginx/nginx.conf
               target: /etc/nginx/nginx.conf
+        networks:
+            - elastic
 
     elasticsearch:
         build:
@@ -57,20 +63,6 @@ services:
             memlock:
                 soft: -1
                 hard: -1
-        networks:
-            - elastic
-
-    kibana:
-        image: kibana:7.17.1
-        container_name: kibana
-        ports:
-            - "5601:5601"
-        environment:
-            - ELASTICSEARCH_URL=http://elasticsearch:9200
-            - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
-            - TZ=Asia/Seoul
-        depends_on:
-            - elasticsearch
         networks:
             - elastic
 
