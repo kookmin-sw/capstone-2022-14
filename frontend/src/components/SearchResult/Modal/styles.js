@@ -10,7 +10,7 @@ export const Background = styled.div`
   left: 0;
   top: 0;
   text-align: center;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.75);
   animation: modal-bg-show 0.5s;
   @keyframes modal-bg-show {
     from {
@@ -25,11 +25,12 @@ export const Background = styled.div`
 export const Content = styled.div`
   width: 50%;
   height: 70%;
+  overflow-y: auto;
   position: relative;
   background: #ffffff;
   border-radius: 0.3rem;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: flex-start;
   align-items: center;
   animation: modal-show 0.5s;
@@ -67,13 +68,12 @@ export const Desc = styled.div`
 `;
 
 export const CloseBtn = styled.button`
-  position: absolute;
-  bottom: 2rem;
-  border: 0;
-  padding: 1rem 2rem;
-  font-size: 1.7rem;
-  color: white;
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
   cursor: pointer;
-  border-radius: 2rem;
-  background-color: #777777;
+  background-color: transparent;
+  border: none;
 `;
+
+export const ImgBox = styled.div``;
