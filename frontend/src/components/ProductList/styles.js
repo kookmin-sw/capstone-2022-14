@@ -17,13 +17,15 @@ export const ItemBtn = styled.button`
   margin: 1rem 2rem;
   font-size: 1rem;
   border: 0;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
   padding: 1rem 2rem;
-  background-color: white;
+  background-color: ${props =>
+    props.isClicked ? 'rgba(0, 0, 0, 0.2)' : 'white'};
+  font-weight: ${props => (props.isClicked ? 'bold' : '400')};
   border-radius: 1rem;
   cursor: pointer;
   transition: all 0.5s;
   :hover {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.2);
   }
 `;

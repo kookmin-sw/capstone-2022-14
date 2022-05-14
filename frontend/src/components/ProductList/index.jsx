@@ -9,6 +9,7 @@ import PriceChart from '../PriceChart';
 function ProductList({ keyword }) {
   const [products, setProducts] = useState(null);
   const [curQuery, setCurQuery] = useState('');
+  const [isClicked, setIsClicked] = useState('');
 
   const search = async query => {
     const response = await SearchAPI.searchQuery(query);
@@ -23,9 +24,11 @@ function ProductList({ keyword }) {
         <>
           {productSub[keyword].map((item, i) => (
             <Style.ItemBtn
+              isClicked={isClicked === item ? true : false}
               key={i}
               onClick={() => {
                 search(item);
+                setIsClicked(item);
               }}
             >
               {item}
