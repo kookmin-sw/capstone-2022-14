@@ -6,7 +6,22 @@ function SearchResult({ result }) {
   const invisibleRef = useRef();
   const [modalOn, setModalOn] = useState(false);
   const [detail, setDetail] = useState({});
-  const [currentQuery, setCurrentQuery] = useState('');
+  const [resultNum, setResultNum] = useState(20);
+  const boxRef = useRef(null);
+  const observerRef = useRef(null);
+
+  useEffect(() => {
+    invisibleRef.current.scrollIntoView({
+      behavior: 'smooth',
+    });
+    setResultNum(20);
+    console.log(result);
+  }, [result]);
+
+  useEffect(() => {
+    observerRef.current = new IntersectionObserver(intersectionObserver);
+    boxRef.current && observerRef.current.observe(boxRef.current);
+  }, [resultNum]);
 
   function changeMarketName(name) {
     switch (name) {
@@ -24,27 +39,32 @@ function SearchResult({ result }) {
     setDetail(source);
   };
 
-  useEffect(() => {
-    invisibleRef.current.scrollIntoView({
-      behavior: 'smooth',
+  const intersectionObserver = (entries, io) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        // 관찰하고 있는 entry가 화면에 보여지는 경우
+        io.unobserve(entry.target); // entry 관찰 해제
+        setResultNum(resultNum + 20); // 데이터 가져오기
+      }
     });
-  }, [result]);
+  };
 
   return (
     <>
       <Style.Scroll ref={invisibleRef} />
       <Style.ResultWrapper>
-        {result['result'].map(e => (
-          <>
+        {result['result'].map((e, index) => {
+          return index < resultNum ? (
             <Style.Result
               key={e._id}
               onClick={event => ClickResult(e._source, event)}
+              ref={index === resultNum - 1 ? boxRef : null}
             >
               {changeMarketName(e._source.market)} - {e._source.title} -{' '}
               {e._source.price}
             </Style.Result>
-          </>
-        ))}
+          ) : null;
+        })}
       </Style.ResultWrapper>
       {modalOn && <Modal detail={detail} onClose={() => setModalOn(false)} />}
     </>
