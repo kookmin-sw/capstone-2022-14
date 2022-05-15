@@ -10,7 +10,7 @@ export const Background = styled.div`
   left: 0;
   top: 0;
   text-align: center;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.75);
   animation: modal-bg-show 0.5s;
   @keyframes modal-bg-show {
     from {
@@ -24,7 +24,7 @@ export const Background = styled.div`
 
 export const Content = styled.div`
   width: 50%;
-  height: 70%;
+  height: 30%;
   position: relative;
   background: #ffffff;
   border-radius: 0.3rem;
@@ -45,35 +45,39 @@ export const Content = styled.div`
   }
 `;
 
-export const Header = styled.div`
-  position: absolute;
-  top: 1rem;
-  font-size: 2rem;
-`;
-
-export const Main = styled.div`
-  position: absolute;
-  top: 6rem;
+export const AlarmWrapper = styled.div`
+  margin-top: 0.5rem;
   display: flex;
   flex-direction: column;
+  align-items: center;
 `;
 
-export const Title = styled.div`
-  font-size: 3rem;
+export const Header = styled.h1``;
+
+export const InputWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-top: 0.2rem;
 `;
 
-export const Desc = styled.div`
+export const inputText = styled.div``;
+
+export const SubmitBtn = styled.button`
+  position: absolute;
+  bottom: 1rem;
+  border: 0;
+  padding: 0.5rem 1rem;
   font-size: 1.2rem;
+  color: white;
+  border-radius: 2rem;
+  background-color: #777777;
 `;
 
 export const CloseBtn = styled.button`
-  position: absolute;
-  bottom: 2rem;
-  border: 0;
-  padding: 1rem 2rem;
-  font-size: 1.7rem;
-  color: white;
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
   cursor: pointer;
-  border-radius: 2rem;
-  background-color: #777777;
+  background-color: transparent;
+  border: none;
 `;
