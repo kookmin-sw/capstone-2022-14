@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 import * as Style from './styles';
 import CloseIcon from '@mui/icons-material/Close';
 
-function Modal({ detail, onClose }) {
+function DetailModal({ detail, onClose }) {
   const outModal = useRef();
 
   useEffect(() => {
@@ -45,4 +45,4 @@ function Modal({ detail, onClose }) {
   );
 }
 
-export default Modal;
+export default DetailModal;

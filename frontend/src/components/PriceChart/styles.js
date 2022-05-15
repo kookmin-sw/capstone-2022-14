@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const PriceChartWrapper = styled.div`
-  width: 80%;
+  width: 90%;
   margin: auto;
   display: flex;
   justify-content: flex-start;

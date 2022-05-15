@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import * as Style from './styles';
-import Modal from './Modal';
+import DetailModal from './DetailModal';
 
 function SearchResult({ result }) {
   const invisibleRef = useRef();
@@ -15,7 +15,6 @@ function SearchResult({ result }) {
       behavior: 'smooth',
     });
     setResultNum(20);
-    console.log(result);
   }, [result]);
 
   useEffect(() => {
@@ -66,7 +65,9 @@ function SearchResult({ result }) {
           ) : null;
         })}
       </Style.ResultWrapper>
-      {modalOn && <Modal detail={detail} onClose={() => setModalOn(false)} />}
+      {modalOn && (
+        <DetailModal detail={detail} onClose={() => setModalOn(false)} />
+      )}
     </>
   );
 }

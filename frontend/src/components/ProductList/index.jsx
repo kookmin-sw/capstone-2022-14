@@ -38,7 +38,7 @@ function ProductList({ keyword }) {
       </Style.Container>
       {productSub[keyword].includes(curQuery) && products.length !== 0 ? (
         <>
-          <PriceChart result={products} />
+          <PriceChart result={products} query={curQuery} />
           <SearchResult result={products} />
         </>
       ) : null}
