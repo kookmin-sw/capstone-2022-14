@@ -65,7 +65,7 @@ products = {
 
 
 @search_bp.route("/<path:query>", methods=["GET"])
-@doc(tags=[API_CATEGORY], summary="ES에 저장된 데이터 검색", description="검색할 키워드를 parameter로 받아 ES에서 검색")
+@doc(tags=[API_CATEGORY], summary="ES에 저장된 데이터 전체 검색", description="검색할 키워드를 parameter로 받아 ES에서 전체 검색")
 def result(query):
     # 일레스틱서치 IP주소와 포트(기본:9200)로 연결한다
     es = Elasticsearch("http://elasticsearch:9200/")  # 환경에 맞게 바꿀 것
@@ -82,9 +82,13 @@ def result(query):
 
     total_price = 0
     minimum_price = 9999999999
+    average_price = 0
 
     # 키워드 검색
     results = es.search(index=index_name, body=search_query)
+    if len(results["hits"]["hits"]) == 0:
+        return {"avg_price": 0, "min_price": 0}
+
     for result in results["hits"]["hits"]:
         price = result["_source"]["price"]
         total_price += price
@@ -97,3 +101,66 @@ def result(query):
         pass
 
     return {"result": results["hits"]["hits"], "avg_price": average_price, "min_price": minimum_price}
+
+
+@search_bp.route("/<path:query>/<path:idx>", methods=["GET"])
+@doc(
+    tags=[API_CATEGORY], summary="ES에 저장된 데이터 페이지 단위로 검색", description="검색할 키워드를 parameter로 받아 페이지 단위로 ES에서 검색"
+)
+def paging(query, idx):
+    # 일레스틱서치 IP주소와 포트(기본:9200)로 연결한다
+    es = Elasticsearch("http://elasticsearch:9200/")  # 환경에 맞게 바꿀 것
+    es.info()
+
+    # 인덱스 지정
+    index_name = "products"
+
+    search_query = {
+        "from": int(idx) * 20,
+        "size": 20,
+        "query": {"multi_match": {"query": products[query], "fields": ["title", "desc", "keyword"]}},
+    }
+
+    # 키워드 검색
+    results = es.search(index=index_name, body=search_query)
+
+    return {"result": results["hits"]["hits"]}
+
+
+@search_bp.route("/price/<path:query>/<path:size>", methods=["GET"])
+@doc(tags=[API_CATEGORY], summary="size만큼 검색하여 평균가, 최저가 리턴", description="size만큼 검색하여 평균가, 최저가 리턴")
+def price(query, size):
+    # 일레스틱서치 IP주소와 포트(기본:9200)로 연결한다
+    es = Elasticsearch("http://elasticsearch:9200/")  # 환경에 맞게 바꿀 것
+    es.info()
+
+    # 인덱스 지정
+    index_name = "products"
+
+    search_query = {
+        "from": 0,
+        "size": size,
+        "query": {"multi_match": {"query": products[query], "fields": ["title", "desc", "keyword"]}},
+    }
+
+    total_price = 0
+    minimum_price = 9999999999
+    average_price = 0
+
+    # 키워드 검색
+    results = es.search(index=index_name, body=search_query)
+    if len(results["hits"]["hits"]) == 0:
+        return {"avg_price": 0, "min_price": 0}
+
+    for result in results["hits"]["hits"]:
+        price = result["_source"]["price"]
+        total_price += price
+        minimum_price = min(price, minimum_price)
+        # print("score:", result["_score"], "source:", result["_source"])
+
+    try:
+        average_price = total_price // len(results["hits"]["hits"])
+    except ZeroDivisionError:
+        pass
+
+    return {"avg_price": average_price, "min_price": minimum_price}
