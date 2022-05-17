@@ -29,3 +29,8 @@ export const ItemBtn = styled.button`
     background-color: rgba(0, 0, 0, 0.2);
   }
 `;
+
+export const Observer = styled.div`
+  width: 100%;
+  height: 10px;
+`;
