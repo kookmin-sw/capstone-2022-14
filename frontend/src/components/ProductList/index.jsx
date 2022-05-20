@@ -36,6 +36,7 @@ function ProductList({ keyword }) {
   }
 
   if (isLoading || isError) {
+    console.log('isLoading, isError');
     return (
       <Style.Container>
         {productSub[keyword].map((item, i) => (
@@ -56,22 +57,25 @@ function ProductList({ keyword }) {
   }
 
   if (data) {
+    console.log('data');
     return (
       <>
         <Style.Container>
-          {productSub[keyword].map((item, i) => (
-            <Style.ItemBtn
-              isClicked={isClicked === item ? true : false}
-              key={i}
-              onClick={() => {
-                search(item);
-                setIsClicked(item);
-                setItem(item);
-              }}
-            >
-              {item}
-            </Style.ItemBtn>
-          ))}
+          <Style.ItemWrapper>
+            {productSub[keyword].map((item, i) => (
+              <Style.ItemBtn
+                isClicked={isClicked === item ? true : false}
+                key={i}
+                onClick={() => {
+                  search(item);
+                  setIsClicked(item);
+                  setItem(item);
+                }}
+              >
+                {item}
+              </Style.ItemBtn>
+            ))}
+          </Style.ItemWrapper>
           {price ? <PriceChart result={price} query={curQuery} /> : null}
           <SearchResult result={data} />
           <Style.Observer ref={ref}>
