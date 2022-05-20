@@ -1,4 +1,3 @@
-
 from flask import request
 from flask_apispec import doc, use_kwargs
 from server.main.controllers.search import (
@@ -111,11 +110,8 @@ def result(query):
     tags=[API_CATEGORY], summary="ES에 저장된 데이터 페이지 단위로 검색", description="검색할 키워드를 parameter로 받아 페이지 단위로 ES에서 검색"
 )
 def paging(query, idx):
-    # 일레스틱서치 IP주소와 포트(기본:9200)로 연결한다
-    es = Elasticsearch("http://elasticsearch:9200/")  # 환경에 맞게 바꿀 것
-    es.info()
+    es = Elasticsearch("http://elasticsearch:9200/")
 
-    # 인덱스 지정
     index_name = "products"
 
     search_query = {
@@ -167,7 +163,10 @@ def price(query, size):
 
     z_scores = (prices - avg_price) / std_price
 
-    min_price = np.min(prices[(z_scores > lower_threshold) & (z_scores < upper_threshold)])
+    new_prices = prices[(z_scores > lower_threshold) & (z_scores < upper_threshold)]
+
+    min_price = np.min(new_prices)
+    avg_price = np.mean(new_prices)
 
     return {
         "avg_price": int(avg_price),
@@ -181,9 +180,7 @@ def price(query, size):
 @search_bp.route("/weekly/<path:query>", methods=["GET"])
 @doc(tags=[API_CATEGORY], summary="키워드의 주간 평균가 리턴", description="검색할 키워드를 parameter로 받아 ES에서 검색하여 주간 평균가 리턴")
 def weekly(query):
-    # 일레스틱서치 IP주소와 포트(기본:9200)로 연결한다
-    es = Elasticsearch("http://elasticsearch:9200/")  # 환경에 맞게 바꿀 것
-    es.info()
+    es = Elasticsearch("http://elasticsearch:9200/")
 
     now = datetime.datetime.now()
     before_1week = now - datetime.timedelta(days=7)
@@ -196,11 +193,12 @@ def weekly(query):
 
     weekly_price = []
 
-    # 인덱스 지정
     index_name = "products"
 
     for g, l in zip(gte, lt):
         search_query = {
+            "from": 0,
+            "size": 30,
             "query": {
                 "bool": {
                     "filter": [
@@ -208,10 +206,9 @@ def weekly(query):
                         {"range": {"date": {"gte": int(g.timestamp()), "lt": int(l.timestamp())}}},
                     ]
                 }
-            }
+            },
         }
 
-        # 키워드 검색
         results = es.search(index=index_name, body=search_query)
 
         if len(results["hits"]["hits"]) == 0:
@@ -221,7 +218,17 @@ def weekly(query):
         prices = np.array(list(map(lambda result: result["_source"]["price"], results["hits"]["hits"])))
 
         avg_price = np.mean(prices)
-       
+        std_price = np.std(prices)
+
+        lower_threshold = -0.1
+        upper_threshold = 1.5
+
+        z_scores = (prices - avg_price) / std_price
+
+        new_prices = prices[(z_scores > lower_threshold) & (z_scores < upper_threshold)]
+
+        avg_price = np.mean(new_prices)
+
         if np.isnan(avg_price):
             weekly_price.append("None")
         else:
