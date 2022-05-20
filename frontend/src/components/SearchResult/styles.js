@@ -1,7 +1,9 @@
 import { Button } from '@mui/material';
 import styled from 'styled-components';
 
-export const ResultWrapper = styled.ul``;
+export const ResultWrapper = styled.ul`
+  width: 100%;
+`;
 
 export const Result = styled.li`
   display: flex;
