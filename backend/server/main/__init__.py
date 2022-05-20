@@ -24,15 +24,17 @@ def create_app(config_filename=config_dir):
             "APISPEC_SWAGGER_UI_URL": "/docs/",
         }
     )
-    app.static_folder = os.path.abspath(app.config["FILE_PATH"])
+    app.static_folder = os.path.abspath(app.config["IMAGE_FILE_PATH"])
     docs = FlaskApiSpec(app)
 
     with app.app_context():
         from server.main.controllers.admin import admin_bp
         from server.main.controllers.search import search_bp
+        from server.main.controllers.img import image_bp
 
         app.register_blueprint(search_bp)
         app.register_blueprint(admin_bp)
+        app.register_blueprint(image_bp)
         docs.register_existing_resources()
 
         # 스웨거에서 options 제거
