@@ -75,7 +75,7 @@ function ProductList({ keyword }) {
             ))}
           </Style.ItemWrapper>
           {price ? <PriceChart result={price} query={curQuery} /> : null}
-          <SearchResult result={data} />
+          {price ? <SearchResult result={data} price={price} /> : null}
           <Style.Observer ref={ref}>
             <LoadingSign loading={isLoading} />
           </Style.Observer>
