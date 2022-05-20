@@ -7,6 +7,8 @@ from server.main.controllers.search import (
 from server.utils.common import response_json_with_code
 from server.main import create_app
 from elasticsearch import Elasticsearch
+import numpy as np
+import datetime
 
 app = create_app()
 
@@ -130,37 +132,46 @@ def paging(query, idx):
 @search_bp.route("/price/<path:query>/<path:size>", methods=["GET"])
 @doc(tags=[API_CATEGORY], summary="size만큼 검색하여 평균가, 최저가 리턴", description="size만큼 검색하여 평균가, 최저가 리턴")
 def price(query, size):
-    # 일레스틱서치 IP주소와 포트(기본:9200)로 연결한다
-    es = Elasticsearch("http://elasticsearch:9200/")  # 환경에 맞게 바꿀 것
-    es.info()
+    es = Elasticsearch("http://elasticsearch:9200/")
 
-    # 인덱스 지정
+    now = datetime.datetime.now()
+    before_30days = now - datetime.timedelta(days=30)
+
     index_name = "products"
-
     search_query = {
         "from": 0,
         "size": size,
-        "query": {"multi_match": {"query": products[query], "fields": ["title", "desc", "keyword"]}},
+        "query": {
+            "bool": {
+                "must": {"multi_match": {"query": products[query], "fields": ["title", "desc", "keyword"]}},
+                "filter": {
+                    "range": {"date": {"gte": int(before_30days.timestamp()), "lt": int(now.timestamp())}}
+                },
+            }
+        },
     }
 
-    total_price = 0
-    minimum_price = 9999999999
-    average_price = 0
-
-    # 키워드 검색
     results = es.search(index=index_name, body=search_query)
+
     if len(results["hits"]["hits"]) == 0:
         return {"avg_price": 0, "min_price": 0}
 
-    for result in results["hits"]["hits"]:
-        price = result["_source"]["price"]
-        total_price += price
-        minimum_price = min(price, minimum_price)
-        # print("score:", result["_score"], "source:", result["_source"])
+    prices = np.array(list(map(lambda result: result["_source"]["price"], results["hits"]["hits"])))
 
-    try:
-        average_price = total_price // len(results["hits"]["hits"])
-    except ZeroDivisionError:
-        pass
+    avg_price = np.mean(prices)
+    std_price = np.std(prices)
 
-    return {"avg_price": average_price, "min_price": minimum_price}
+    lower_threshold = -0.1
+    upper_threshold = 1.5
+
+    z_scores = (prices - avg_price) / std_price
+
+    min_price = np.min(prices[(z_scores > lower_threshold) & (z_scores < upper_threshold)])
+
+    return {
+        "avg_price": int(avg_price),
+        "min_price": int(min_price),
+        "lower_threshold": lower_threshold,
+        "upper_threshold": upper_threshold,
+        "std": std_price,
+    }
