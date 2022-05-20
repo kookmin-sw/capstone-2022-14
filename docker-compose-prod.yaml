@@ -9,6 +9,7 @@ services:
             - db
         volumes:
             - ./backend:/app
+            - ./image:/app/crawler/image
         networks:
             - elastic
 
