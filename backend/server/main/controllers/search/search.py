@@ -159,7 +159,7 @@ def price(query, size):
     std_price = np.std(prices)
 
     lower_threshold = -0.1
-    upper_threshold = 1.5
+    upper_threshold = 0.9
 
     z_scores = (prices - avg_price) / std_price
 
@@ -198,7 +198,7 @@ def weekly(query):
     for g, l in zip(gte, lt):
         search_query = {
             "from": 0,
-            "size": 30,
+            "size": 100,
             "query": {
                 "bool": {
                     "filter": [
@@ -221,7 +221,7 @@ def weekly(query):
         std_price = np.std(prices)
 
         lower_threshold = -0.1
-        upper_threshold = 1.5
+        upper_threshold = 0.9
 
         z_scores = (prices - avg_price) / std_price
 
