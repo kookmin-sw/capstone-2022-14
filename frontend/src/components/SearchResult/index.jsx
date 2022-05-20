@@ -11,7 +11,7 @@ function SearchResult({ result }) {
     invisibleRef.current.scrollIntoView({
       behavior: 'smooth',
     });
-  }, [result]);
+  }, []);
 
   function changeMarketName(name) {
     switch (name) {
