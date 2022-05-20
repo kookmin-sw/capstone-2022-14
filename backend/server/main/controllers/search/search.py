@@ -132,7 +132,7 @@ def price(query, size):
     es = Elasticsearch("http://elasticsearch:9200/")
 
     now = datetime.datetime.now()
-    before_30days = now - datetime.timedelta(days=30)
+    before_7days = now - datetime.timedelta(days=7)
 
     index_name = "products"
     search_query = {
@@ -142,7 +142,7 @@ def price(query, size):
             "bool": {
                 "must": {"multi_match": {"query": products[query], "fields": ["title", "desc", "keyword"]}},
                 "filter": {
-                    "range": {"date": {"gte": int(before_30days.timestamp()), "lt": int(now.timestamp())}}
+                    "range": {"date": {"gte": int(before_7days.timestamp()), "lt": int(now.timestamp())}}
                 },
             }
         },
