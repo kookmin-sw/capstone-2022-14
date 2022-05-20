@@ -14,6 +14,17 @@ function DetailModal({ detail, onClose }) {
     };
   }, []);
 
+  function getMarketBaseURL(name) {
+    switch (name) {
+      case 'Daangn':
+        return 'daangn_image';
+      case 'Bunjang':
+        return 'bunjang_image';
+      default:
+        return '';
+    }
+  }
+
   return createPortal(
     <Style.Background
       ref={outModal}
@@ -31,6 +42,17 @@ function DetailModal({ detail, onClose }) {
           <div>{detail.date}</div>
           <div>{detail.region}</div>
           <div>{detail.picture}</div>
+          <div>{detail.market}</div>
+          {detail?.pictures?.map(source => {
+            return (
+              <img
+                width="50%"
+                height="50%"
+                src={`/api/image/${getMarketBaseURL(detail.market)}/${source}`}
+                alt={detail.title}
+              />
+            );
+          })}
         </Style.Main>
         <Style.CloseBtn>
           <CloseIcon
