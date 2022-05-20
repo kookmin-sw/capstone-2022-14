@@ -154,7 +154,7 @@ def price(query, size):
     results = es.search(index=index_name, body=search_query)
 
     if len(results["hits"]["hits"]) == 0:
-        return {"avg_price": 0, "min_price": 0}
+        return {"avg_price": 0, "min_price": 0, "lower_threshold": 0, "upper_threshold": 0, "std": 0}
 
     prices = np.array(list(map(lambda result: result["_source"]["price"], results["hits"]["hits"])))
 
