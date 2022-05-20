@@ -110,11 +110,8 @@ def result(query):
     tags=[API_CATEGORY], summary="ES에 저장된 데이터 페이지 단위로 검색", description="검색할 키워드를 parameter로 받아 페이지 단위로 ES에서 검색"
 )
 def paging(query, idx):
-    # 일레스틱서치 IP주소와 포트(기본:9200)로 연결한다
-    es = Elasticsearch("http://elasticsearch:9200/")  # 환경에 맞게 바꿀 것
-    es.info()
+    es = Elasticsearch("http://elasticsearch:9200/")
 
-    # 인덱스 지정
     index_name = "products"
 
     search_query = {
@@ -135,7 +132,7 @@ def price(query, size):
     es = Elasticsearch("http://elasticsearch:9200/")
 
     now = datetime.datetime.now()
-    before_30days = now - datetime.timedelta(days=30)
+    before_7days = now - datetime.timedelta(days=7)
 
     index_name = "products"
     search_query = {
@@ -145,7 +142,7 @@ def price(query, size):
             "bool": {
                 "must": {"multi_match": {"query": products[query], "fields": ["title", "desc", "keyword"]}},
                 "filter": {
-                    "range": {"date": {"gte": int(before_30days.timestamp()), "lt": int(now.timestamp())}}
+                    "range": {"date": {"gte": int(before_7days.timestamp()), "lt": int(now.timestamp())}}
                 },
             }
         },
@@ -166,7 +163,10 @@ def price(query, size):
 
     z_scores = (prices - avg_price) / std_price
 
-    min_price = np.min(prices[(z_scores > lower_threshold) & (z_scores < upper_threshold)])
+    new_prices = prices[(z_scores > lower_threshold) & (z_scores < upper_threshold)]
+
+    min_price = np.min(new_prices)
+    avg_price = np.mean(new_prices)
 
     return {
         "avg_price": int(avg_price),
@@ -175,3 +175,63 @@ def price(query, size):
         "upper_threshold": upper_threshold,
         "std": std_price,
     }
+
+
+@search_bp.route("/weekly/<path:query>", methods=["GET"])
+@doc(tags=[API_CATEGORY], summary="키워드의 주간 평균가 리턴", description="검색할 키워드를 parameter로 받아 ES에서 검색하여 주간 평균가 리턴")
+def weekly(query):
+    es = Elasticsearch("http://elasticsearch:9200/")
+
+    now = datetime.datetime.now()
+    before_1week = now - datetime.timedelta(days=7)
+    before_2week = now - datetime.timedelta(days=14)
+    before_3week = now - datetime.timedelta(days=21)
+    before_4week = now - datetime.timedelta(days=28)
+
+    gte = [before_1week, before_2week, before_3week, before_4week]
+    lt = [now, before_1week, before_2week, before_3week]
+
+    weekly_price = []
+
+    index_name = "products"
+
+    for g, l in zip(gte, lt):
+        search_query = {
+            "from": 0,
+            "size": 30,
+            "query": {
+                "bool": {
+                    "filter": [
+                        {"multi_match": {"query": products[query], "fields": ["title", "desc", "keyword"]}},
+                        {"range": {"date": {"gte": int(g.timestamp()), "lt": int(l.timestamp())}}},
+                    ]
+                }
+            },
+        }
+
+        results = es.search(index=index_name, body=search_query)
+
+        if len(results["hits"]["hits"]) == 0:
+            weekly_price.append("None")
+            continue
+
+        prices = np.array(list(map(lambda result: result["_source"]["price"], results["hits"]["hits"])))
+
+        avg_price = np.mean(prices)
+        std_price = np.std(prices)
+
+        lower_threshold = -0.1
+        upper_threshold = 1.5
+
+        z_scores = (prices - avg_price) / std_price
+
+        new_prices = prices[(z_scores > lower_threshold) & (z_scores < upper_threshold)]
+
+        avg_price = np.mean(new_prices)
+
+        if np.isnan(avg_price):
+            weekly_price.append("None")
+        else:
+            weekly_price.append(int(avg_price))
+
+    return {"weekly_price": weekly_price}

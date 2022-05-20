@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import * as Style from './styles';
 import DetailModal from './DetailModal';
 
-function SearchResult({ result, price }) {
+function SearchResult({ result, price, query }) {
   const invisibleRef = useRef();
   const [modalOn, setModalOn] = useState(false);
   const [detail, setDetail] = useState({});
@@ -11,7 +11,7 @@ function SearchResult({ result, price }) {
     invisibleRef.current.scrollIntoView({
       behavior: 'smooth',
     });
-  }, []);
+  }, [query]);
 
   function changeMarketName(name) {
     switch (name) {

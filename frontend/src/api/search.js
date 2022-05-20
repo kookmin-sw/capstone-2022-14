@@ -8,6 +8,10 @@ class SearchAPI {
   searchPageQuery(searchWord, page) {
     return axiosInstance.get(`/api/search/${searchWord}/${page}`);
   }
+
+  searchWeeklyPriceQuery(searchWord) {
+    return axiosInstance.get(`/api/search/weekly/${searchWord}`);
+  }
 }
 
 export default new SearchAPI();
