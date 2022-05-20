@@ -36,7 +36,6 @@ function ProductList({ keyword }) {
   }
 
   if (isLoading || isError) {
-    console.log('isLoading, isError');
     return (
       <Style.Container>
         {productSub[keyword].map((item, i) => (
@@ -57,7 +56,6 @@ function ProductList({ keyword }) {
   }
 
   if (data) {
-    console.log('data');
     return (
       <>
         <Style.Container>
