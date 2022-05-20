@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
+  width: 100%;
   margin-top: 8rem;
   margin-bottom: 2rem;
   display: flex;
@@ -11,6 +12,15 @@ export const Container = styled.div`
 export const IphoneContainer = styled.div`
   display: flex;
   justify-content: start;
+  margin-bottom: 2rem;
+`;
+
+export const ItemWrapper = styled.div`
+  width: 100%;
+  margin: auto;
+  display: flex;
+  justify-content: space-evenly;
+  flex-flow: row wrap;
 `;
 
 export const ItemBtn = styled.button`
