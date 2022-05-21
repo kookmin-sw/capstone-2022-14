@@ -4,21 +4,16 @@ export const ResultWrapper = styled.div`
   margin-top: 3rem;
   display: grid;
   grid-template-columns: repeat(5, 200px);
-  grid-gap: 1.5rem;
+  grid-gap: 3rem;
   place-content: space-evenly space-evenly;
-  @media (max-width: 1117px) {
+  @media (max-width: 1210px) {
     grid-template-columns: repeat(4, 200px);
-    grid-gap: 1.5rem;
+    grid-gap: 3rem;
     place-content: space-evenly space-evenly;
   }
-  @media (max-width: 910px) {
+  @media (max-width: 956px) {
     grid-template-columns: repeat(3, 200px);
-    grid-gap: 1.5rem;
-    place-content: space-evenly space-evenly;
-  }
-  @media (max-width: 645px) {
-    grid-template-columns: repeat(2, 200px);
-    grid-gap: 1.5rem;
+    grid-gap: 3rem;
     place-content: space-evenly space-evenly;
   }
 `;
