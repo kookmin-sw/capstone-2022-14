@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import * as Style from './styles';
-import DetailModal from './DetailModal';
+import DetailModal from '../DetailModal';
 
 function SearchResult({ result, price }) {
   const invisibleRef = useRef();

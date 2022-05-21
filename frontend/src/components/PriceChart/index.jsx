@@ -4,7 +4,7 @@ import { Chart } from 'react-chartjs-2';
 import Button from '@mui/material/Button';
 import AddAlertIcon from '@mui/icons-material/AddAlert';
 import * as Style from './styles';
-import AlarmModal from './AlarmModal';
+import AlarmModal from '../AlarmModal';
 
 const data = {
   labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import * as Style from './styles';
-import Carousel from '../../Carousel';
+import Carousel from '../Carousel';
 import CloseIcon from '@mui/icons-material/Close';
 
 function DetailModal({ detail, onClose }) {
