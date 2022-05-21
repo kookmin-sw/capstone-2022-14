@@ -40,15 +40,11 @@ function Carousel({ title, marketBase, images }) {
     <Style.Container>
       <Style.StyledSlider {...settings}>
         {images.map((source, index) => {
-          // eslint-disable-next-line prettier/prettier
-          const imageSrc = `/api/image/${marketBase}/${source}`;
-          console.log(imageSrc);
           return (
             <Style.CardBox key={index}>
               <Style.CardImg
                 alt={title}
-                //eslint
-                src={imageSrc}
+                src={`/api/image/${marketBase}/${source}`}
               />
             </Style.CardBox>
           );

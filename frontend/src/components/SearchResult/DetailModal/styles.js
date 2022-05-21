@@ -45,23 +45,46 @@ export const Content = styled.div`
 `;
 
 export const Main = styled.div`
+  width: 100%;
   height: 100%;
+  padding: 1.5rem;
   display: flex;
   flex-direction: column;
   overflow-y: auto;
 `;
 
 export const Title = styled.div`
-  margin-top: 2rem;
-  font-size: 2rem;
+  text-align: left;
+  margin: 1.2rem 0;
+  font-size: 1.5rem;
+  font-weight: bold;
 `;
 
-export const Price = styled.div``;
+export const InfoWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  padding: 0.5rem 0;
+  font-size: 0.8rem;
+  color: gray;
+`;
+
+export const Price = styled.div`
+  font-weight: bolder;
+`;
+
+export const Region = styled.div`
+  padding-left: 0.7rem;
+`;
+
+export const UploadDate = styled.div`
+  padding-left: 0.7rem;
+`;
 
 export const Desc = styled.span`
   white-space: pre-line;
   text-align: left;
   font-size: 1rem;
+  margin-top: 1rem;
 `;
 
 export const CloseBtn = styled.button`

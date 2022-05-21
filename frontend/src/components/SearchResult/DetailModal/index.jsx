@@ -18,7 +18,6 @@ function DetailModal({ detail, onClose }) {
   }, []);
 
   useEffect(() => {
-    console.log(detail);
     setMarketBase(getMarketBaseURL(detail.market));
     setImages(detail.market === 'Daangn' ? detail.images : detail.pictures);
   }, []);
@@ -32,6 +31,29 @@ function DetailModal({ detail, onClose }) {
       default:
         return '';
     }
+  }
+
+  function Unix_timestamp(t) {
+    var date = new Date(t * 1000);
+    var year = date.getFullYear();
+    var month = '0' + (date.getMonth() + 1);
+    var day = '0' + date.getDate();
+    var hour = '0' + date.getHours();
+    var minute = '0' + date.getMinutes();
+    var second = '0' + date.getSeconds();
+    return (
+      year +
+      '-' +
+      month.substr(-2) +
+      '-' +
+      day.substr(-2) +
+      ' ' +
+      hour.substr(-2) +
+      ':' +
+      minute.substr(-2) +
+      ':' +
+      second.substr(-2)
+    );
   }
 
   return createPortal(
@@ -53,11 +75,12 @@ function DetailModal({ detail, onClose }) {
         ) : null}
         <Style.Main>
           <Style.Title>{detail.title}</Style.Title>
+          <Style.InfoWrapper>
+            <Style.Price>{detail.price.toLocaleString('ko-KR')}원</Style.Price>
+            <Style.UploadDate>{Unix_timestamp(detail.date)}</Style.UploadDate>
+            <Style.Region>{detail.region}</Style.Region>
+          </Style.InfoWrapper>
           <Style.Desc>{`${detail.desc}`}</Style.Desc>
-          <div>{detail.price}</div>
-          <div>{detail.date}</div>
-          <div>{detail.region}</div>
-          <div>{detail.market}</div>
         </Style.Main>
         <Style.CloseBtn>
           <CloseIcon

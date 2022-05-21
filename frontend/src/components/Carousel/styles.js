@@ -4,25 +4,21 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
 export const Container = styled.div`
-  /* width: 500px;
+  width: 600px;
   height: 500px;
-  margin: 0 auto; */
+  margin: 0 auto;
 `;
 
 // 슬라이드 CSS
 export const StyledSlider = styled(Slider)`
-  .slick-list {
+  /* .slick-list {
     width: 600px;
     height: 500px;
     margin: 0 auto;
-  }
-
-  .slick-slide div {
-    /* cursor: pointer; */
-  }
+  } */
 
   .slick-dots {
-    bottom: 0;
+    bottom: 5px;
   }
 
   .slick-prev:before,
