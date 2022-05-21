@@ -64,11 +64,18 @@ function SearchResult({ result, price, query }) {
 
   const getThumbnail = source => {
     const thumbnailUrl =
-      source.market === 'Daangn' ? source.images[0] : source.pictures[0];
+      source.market === 'Daangn'
+        ? source.images
+          ? source.images[0]
+          : null
+        : source.pictures
+        ? source.pictures[0]
+        : null;
     const baseMarket =
       source.market === 'Daangn' ? 'daangn_image' : 'bunjang_image';
 
-    return `/api/image/${baseMarket}/${thumbnailUrl}`;
+    if (thumbnailUrl) return `/api/image/${baseMarket}/${thumbnailUrl}`;
+    else return `${process.env.PUBLIC_URL}/images/null_image.png`;
   };
 
   return (
