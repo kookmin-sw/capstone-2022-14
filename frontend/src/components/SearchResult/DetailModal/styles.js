@@ -23,14 +23,13 @@ export const Background = styled.div`
 `;
 
 export const Content = styled.div`
-  width: 80%;
-  height: 70%;
+  width: 600px;
+  height: 90%;
   position: relative;
   background: #ffffff;
   border-radius: 0.3rem;
   display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
+  flex-direction: column;
   align-items: center;
   animation: modal-show 0.5s;
   @keyframes modal-show {
@@ -54,11 +53,15 @@ export const Main = styled.div`
 
 export const Title = styled.div`
   margin-top: 2rem;
-  font-size: 3rem;
+  font-size: 2rem;
 `;
 
-export const Desc = styled.div`
-  font-size: 1.2rem;
+export const Price = styled.div``;
+
+export const Desc = styled.span`
+  white-space: pre-line;
+  text-align: left;
+  font-size: 1rem;
 `;
 
 export const CloseBtn = styled.button`

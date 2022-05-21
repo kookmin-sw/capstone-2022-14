@@ -4,39 +4,35 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
 export const Container = styled.div`
-  width: 500px;
+  /* width: 500px;
   height: 500px;
-  margin: 0 auto;
+  margin: 0 auto; */
 `;
 
 // 슬라이드 CSS
 export const StyledSlider = styled(Slider)`
-  /* .slick-list {
-    width: 500px;
+  .slick-list {
+    width: 600px;
     height: 500px;
     margin: 0 auto;
-  } */
+  }
 
   .slick-slide div {
     /* cursor: pointer; */
   }
 
   .slick-dots {
-    bottom: -50px;
-    margin-top: 200px;
+    bottom: 0;
   }
 
-  .slick-track {
-    /* overflow-x: hidden; */
+  .slick-prev:before,
+  .slick-next:before {
+    color: #525252;
+    opacity: 0.5;
   }
 
   .slick-prev,
   .slick-next {
-    font-size: 0;
-    position: absolute;
-    color: #fff;
-    border: 0;
-    background: none;
     z-index: 1;
     cursor: pointer;
   }
@@ -51,12 +47,14 @@ export const StyledSlider = styled(Slider)`
 
   .slick-prev:hover:after,
   .slick-next:hover:after {
-    color: #7e7e7e;
+    color: #000000;
   }
 `;
 
 export const CardBox = styled.div``;
 
 export const CardImg = styled.img`
-  width: 500px;
+  margin: auto;
+  max-width: 600px;
+  max-height: 500px;
 `;

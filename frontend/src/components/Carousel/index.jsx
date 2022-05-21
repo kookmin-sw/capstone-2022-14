@@ -1,18 +1,7 @@
 import React, { useState } from 'react';
 import * as Style from './styles';
 
-function Carousel({ detail }) {
-  function getMarketBaseURL(name) {
-    switch (name) {
-      case 'Daangn':
-        return 'daangn_image';
-      case 'Bunjang':
-        return 'bunjang_image';
-      default:
-        return '';
-    }
-  }
-
+function Carousel({ title, marketBase, images }) {
   function NextArrow(props) {
     const { className, style, onClick } = props;
     return (
@@ -50,12 +39,16 @@ function Carousel({ detail }) {
   return (
     <Style.Container>
       <Style.StyledSlider {...settings}>
-        {detail?.pictures?.map((source, index) => {
+        {images.map((source, index) => {
+          // eslint-disable-next-line prettier/prettier
+          const imageSrc = `/api/image/${marketBase}/${source}`;
+          console.log(imageSrc);
           return (
             <Style.CardBox key={index}>
               <Style.CardImg
-                alt={detail.title}
-                src={`/api/image/${getMarketBaseURL(detail.market)}/${source}`}
+                alt={title}
+                //eslint
+                src={imageSrc}
               />
             </Style.CardBox>
           );
