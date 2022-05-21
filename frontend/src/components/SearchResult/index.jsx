@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import * as Style from './styles';
-import DetailModal from './DetailModal';
+import DetailModal from '../DetailModal';
 
 function SearchResult({ result, price, query }) {
   const invisibleRef = useRef();
@@ -13,15 +13,27 @@ function SearchResult({ result, price, query }) {
     });
   }, [query]);
 
-  function changeMarketName(name) {
-    switch (name) {
-      case 'Daangn':
-        return '당근마켓';
-      case 'Bunjang':
-        return '번개장터';
-      default:
-        return '';
-    }
+  function unixTimestamp(t) {
+    var date = new Date(t * 1000);
+    var year = date.getFullYear();
+    var month = '0' + (date.getMonth() + 1);
+    var day = '0' + date.getDate();
+    var hour = '0' + date.getHours();
+    var minute = '0' + date.getMinutes();
+    var second = '0' + date.getSeconds();
+    return (
+      year +
+      '-' +
+      month.substr(-2) +
+      '-' +
+      day.substr(-2) +
+      ' ' +
+      hour.substr(-2) +
+      ':' +
+      minute.substr(-2) +
+      ':' +
+      second.substr(-2)
+    );
   }
 
   const ClickResult = (source, e) => {
@@ -50,6 +62,15 @@ function SearchResult({ result, price, query }) {
     }
   };
 
+  const getThumbnail = source => {
+    const thumbnailUrl =
+      source.market === 'Daangn' ? source.images[0] : source.pictures[0];
+    const baseMarket =
+      source.market === 'Daangn' ? 'daangn_image' : 'bunjang_image';
+
+    return `/api/image/${baseMarket}/${thumbnailUrl}`;
+  };
+
   return (
     <>
       <Style.Scroll ref={invisibleRef} />
@@ -66,13 +87,17 @@ function SearchResult({ result, price, query }) {
               )
             ) {
               return (
-                <Style.Result
+                <Style.ResultItem
                   key={e._id}
                   onClick={event => ClickResult(e._source, event)}
                 >
-                  {changeMarketName(e._source.market)} - {e._source.title} -{' '}
-                  {e._source.price}
-                </Style.Result>
+                  <Style.ItemImg src={getThumbnail(e._source)} />
+                  <Style.Title>{e._source.title}</Style.Title>
+                  <Style.Price>
+                    {e._source.price.toLocaleString('ko-KR')}원
+                  </Style.Price>
+                  <Style.Date>{unixTimestamp(e._source.date)}</Style.Date>
+                </Style.ResultItem>
               );
             }
           }),
