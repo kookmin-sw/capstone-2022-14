@@ -26,7 +26,14 @@ def get_keywords(file_name="keywords.txt"):
 
 if __name__ == "__main__":
     # connect to elasticsearch
-    es_client = EsStore("http://127.0.0.1:9200/")
+    host = "http://127.0.0.1:9200/"
+
+    try:
+        es_client = EsStore(host)
+    except:
+        print(f"{host} 서버가 응답하지 않습니다")
+        print("서버 상태 확인 후 다시 실행해 주세요 ")
+        sys.exit(0)
 
     # define crawlers
     daangn = DaangnCrawler()
@@ -38,7 +45,9 @@ if __name__ == "__main__":
 
     # get crawling keywords
     crawl_keywords = get_keywords()
-    crawl_pages = 1  # TODO
+    crawl_pages = 3  # TODO
+    if len(sys.argv) > 1:
+        crawl_pages = int(sys.argv[1])
 
     isFirst = False
     if not os.path.isfile("keywords_count.json"):
@@ -55,20 +64,20 @@ if __name__ == "__main__":
         for data in crawl_data:
             es_client.insert(data.__dict__, f"{data.market}_{data.pid}")
 
-        # price notification
-        with open("keywords_count.json", "r", encoding="utf-8") as f:
-            data = json.load(f)
+        # # price notification
+        # with open("keywords_count.json", "r", encoding="utf-8") as f:
+        #     data = json.load(f)
 
-        if es_client.count(keyword)["count"] > data[keyword] and not isFirst:
-            c = es_client.count(keyword)["count"] - data[keyword]
+        # if es_client.count(keyword)["count"] > data[keyword] and not isFirst:
+        #     c = es_client.count(keyword)["count"] - data[keyword]
 
-            for i in range(c):
-                if crawl_data[i].price <= 150000:
-                    print(f"{keyword} {crawl_data[i].price}원 알림 전송")
+        #     for i in range(c):
+        #         if crawl_data[i].price <= 150000:
+        #             print(f"{keyword} {crawl_data[i].price}원 알림 전송")
 
-        data[keyword] = es_client.count(keyword)["count"]
+        # data[keyword] = es_client.count(keyword)["count"]
 
-        with open("keywords_count.json", "w", encoding="utf-8") as f:
-            json.dump(data, f, indent="\t", ensure_ascii=False)
+        # with open("keywords_count.json", "w", encoding="utf-8") as f:
+        #     json.dump(data, f, indent="\t", ensure_ascii=False)
 
     es_client.refresh()
