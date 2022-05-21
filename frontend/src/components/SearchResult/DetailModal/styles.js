@@ -23,9 +23,8 @@ export const Background = styled.div`
 `;
 
 export const Content = styled.div`
-  width: 50%;
+  width: 80%;
   height: 70%;
-  overflow-y: auto;
   position: relative;
   background: #ffffff;
   border-radius: 0.3rem;
@@ -46,20 +45,15 @@ export const Content = styled.div`
   }
 `;
 
-export const Header = styled.div`
-  position: absolute;
-  top: 1rem;
-  font-size: 2rem;
-`;
-
 export const Main = styled.div`
-  position: absolute;
-  top: 6rem;
+  height: 100%;
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
 `;
 
 export const Title = styled.div`
+  margin-top: 2rem;
   font-size: 3rem;
 `;
 

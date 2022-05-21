@@ -1,13 +1,13 @@
 import React, { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import * as Style from './styles';
+import Carousel from '../../Carousel';
 import CloseIcon from '@mui/icons-material/Close';
 
 function DetailModal({ detail, onClose }) {
   const outModal = useRef();
 
   useEffect(() => {
-    console.log(detail);
     document.body.style.overflow = 'hidden';
     return () => {
       document.body.style.overflow = 'visible';
@@ -35,6 +35,7 @@ function DetailModal({ detail, onClose }) {
       }}
     >
       <Style.Content>
+        {detail?.pictures.length ? <Carousel detail={detail} /> : null}
         <Style.Main>
           <Style.Title>{detail.title}</Style.Title>
           <Style.Desc>{detail.desc}</Style.Desc>
@@ -43,16 +44,6 @@ function DetailModal({ detail, onClose }) {
           <div>{detail.region}</div>
           <div>{detail.picture}</div>
           <div>{detail.market}</div>
-          {detail?.pictures?.map(source => {
-            return (
-              <img
-                width="50%"
-                height="50%"
-                src={`/api/image/${getMarketBaseURL(detail.market)}/${source}`}
-                alt={detail.title}
-              />
-            );
-          })}
         </Style.Main>
         <Style.CloseBtn>
           <CloseIcon
