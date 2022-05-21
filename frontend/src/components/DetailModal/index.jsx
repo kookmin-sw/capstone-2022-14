@@ -66,7 +66,7 @@ function DetailModal({ detail, onClose }) {
       }}
     >
       <Style.Content>
-        {images.length ? (
+        {images ? (
           <Carousel
             title={detail.title}
             marketBase={marketBase}
