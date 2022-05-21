@@ -1,6 +1,7 @@
 from itembase import ItemBase
 from bs4 import BeautifulSoup
 from PIL import Image
+import json
 import requests
 import urllib.request
 import os
@@ -16,6 +17,11 @@ class DaangnItem(ItemBase):
 
 
 class DaangnCrawler:
+    def __init__(self):
+        with open("kakao_api.json", "r") as f:
+            json_data = json.load(f)
+            self.api_key = json_data["rest_api_key"]
+
     def crawl_data(self, keyword, pages):
         items = []
         for page in range(1, pages + 1):
@@ -29,7 +35,6 @@ class DaangnCrawler:
                     self.data_process(item, keyword)
                 except:
                     continue
-                # print(item.__dict__)
 
             items += page_items
 
@@ -55,6 +60,9 @@ class DaangnCrawler:
             date = dates[0]
 
         item.date = self.__parse_date(date)
+
+        item.region = article.find("div", id="region-name").text
+        item.latitude, item.longitude = self.__get_geolocation(item.region)
 
     def __get_article_items(self, html):
         bs = BeautifulSoup(html, "lxml")
@@ -121,3 +129,17 @@ class DaangnCrawler:
             date = now
 
         return int(date.timestamp())
+
+    def __get_geolocation(self, region):
+        headers = {"Authorization": f"KakaoAK {self.api_key}"}
+        url = f"https://dapi.kakao.com/v2/local/search/address.json?query={region}"
+        response = requests.get(url, headers=headers).json()
+
+        try:
+            latitude = response["documents"][0]["y"]
+            longitude = response["documents"][0]["x"]
+        except:
+            latitude = ""
+            longitude = ""
+
+        return (latitude, longitude)

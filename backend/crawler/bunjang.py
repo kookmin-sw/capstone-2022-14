@@ -36,6 +36,12 @@ class BunjangCrawler:
         item.pictures = self.__get_image(item_info["product_image"], item_info["image_count"], item.pid)
         item.views = int(item_info["num_item_view"])
         item.date = int(item_info["update_time"])
+        if "location" in item_info:
+            item.region = item_info["location"]
+        if "latitude" in item_info:
+            item.latitude = item_info["latitude"]
+        if "longitude" in item_info:
+            item.longitude = item_info["longitude"]
 
         return item
 

@@ -11,6 +11,8 @@ class ItemBase:
         self.pictures = []
         self.views = 0
         self.region = ""
+        self.latitude = ""
+        self.longitude = ""
 
     def __str__(self):
         return str(self.__dict__)

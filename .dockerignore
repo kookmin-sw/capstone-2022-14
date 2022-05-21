@@ -168,3 +168,4 @@ backend/crawler/image
 image/
 
 keywords_count.json
+kakao_api.json
