@@ -198,13 +198,13 @@ def weekly(query):
     for g, l in zip(gte, lt):
         search_query = {
             "from": 0,
-            "size": 100,
+            "size": 50,
             "query": {
                 "bool": {
+                    "must": {"multi_match": {"query": products[query], "fields": ["title", "desc", "keyword"]}},
                     "filter": [
-                        {"multi_match": {"query": products[query], "fields": ["title", "desc", "keyword"]}},
                         {"range": {"date": {"gte": int(g.timestamp()), "lt": int(l.timestamp())}}},
-                    ]
+                    ],
                 }
             },
         }
