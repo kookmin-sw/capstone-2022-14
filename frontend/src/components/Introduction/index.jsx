@@ -6,8 +6,11 @@ function Introduction() {
     <Style.BoxWrapper>
       <Style.TextWrapper>
         <Style.MainText>Search your item.</Style.MainText>
+        <Style.SubText>애플 중고 매물을 찾고 있으세요?</Style.SubText>
+        <br />
         <Style.SubText>
-          찾고자 하는 매물만 정확히 골라서 보여줍니다.
+          해당 사이트의 검색기능을 이용하세요. 찾고자 하는 매물만 정확히 골라서
+          보여줍니다.
         </Style.SubText>
       </Style.TextWrapper>
       <Style.SvgWrapper w="420">
