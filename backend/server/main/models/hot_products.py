@@ -29,9 +29,9 @@ class HotProducts(db.Model):
             .limit(count)
             .all()
         )
-        result = []
+        result = {}
 
         for product in products:
-            result.append({product.product: product.count})
+            result[product.product] = product.count
 
         return result
