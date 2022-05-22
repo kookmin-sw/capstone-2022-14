@@ -244,3 +244,22 @@ def weekly(query):
             weekly_price.append(int(avg_price))
 
     return {"weekly_price": weekly_price}
+
+
+@search_bp.route("/recent/<path:idx>", methods=["GET"])
+@doc(tags=[API_CATEGORY], summary="최근 크롤링 결과 페이지 단위로 리턴", description="최근 크롤링 결과 페이지 단위로 리턴")
+def recent(idx):
+    es = Elasticsearch("http://elasticsearch:9200/")
+
+    index_name = "products"
+
+    search_query = {
+        "from": int(idx) * 5,
+        "size": 5,
+        "sort": ["_score", {"views": "desc"}],
+        "query": {"match_all": {}},
+    }
+
+    results = es.search(index=index_name, body=search_query)
+
+    return {"result": results["hits"]["hits"]}
