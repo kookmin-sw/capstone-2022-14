@@ -1,4 +1,3 @@
-from server.main import db
 from flask_apispec import doc
 from server.main.controllers.hot import (
     API_CATEGORY,
