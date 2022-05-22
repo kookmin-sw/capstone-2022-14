@@ -15,27 +15,20 @@ function Introduction() {
       </Style.TextWrapper>
       <Style.SvgWrapper w="420">
         <svg width="420" height="420" xmlns="http://www.w3.org/2000/svg">
-          {/* <defs>
-          <linearGradient id="circleGradient" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stop-color="#00a2ff" />
-            <stop offset="100%" stop-color="#004d80" />
-          </linearGradient>
-        </defs>
-        <circle fill="url(#circleGradient)" cx="186" cy="186" r="186"></circle> */}
           <linearGradient id="linearColors" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="5%" stop-color="#01E400"></stop>
-            <stop offset="25%" stop-color="#FEFF01"></stop>
-            <stop offset="40%" stop-color="#FF7E00"></stop>
-            <stop offset="60%" stop-color="#FB0300"></stop>
-            <stop offset="80%" stop-color="#9B004A"></stop>
-            <stop offset="100%" stop-color="#7D0022"></stop>
+            <stop offset="5%" stopColor="#01E400"></stop>
+            <stop offset="25%" stopColor="#FEFF01"></stop>
+            <stop offset="40%" stopColor="#FF7E00"></stop>
+            <stop offset="60%" stopColor="#FB0300"></stop>
+            <stop offset="80%" stopColor="#9B004A"></stop>
+            <stop offset="100%" stopColor="#7D0022"></stop>
           </linearGradient>
           <circle
             r="200"
             cx="210"
             cy="210"
-            class="external-circle"
-            stroke-width="10"
+            className="external-circle"
+            strokeWidth="10"
             fill="none"
             stroke="url(#linearColors)"
           ></circle>
