@@ -20,7 +20,9 @@ const Header = () => {
           <Style.HeaderContent onClick={() => navigate('/pricechart')}>
             가격추이 확인
           </Style.HeaderContent>
-          <Style.HeaderContent>인기매물 조회</Style.HeaderContent>
+          <Style.HeaderContent onClick={() => navigate('/hotproducts')}>
+            인기매물 조회
+          </Style.HeaderContent>
           <Style.HeaderContent onClick={() => setModalOn(true)}>
             알림등록
           </Style.HeaderContent>

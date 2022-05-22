@@ -171,3 +171,5 @@ keywords_count.json
 
 scheduler.sh.log
 kakao_api.json
+backend/server/main/server.cfg
+backend/migrations
