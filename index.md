@@ -14,7 +14,7 @@ The purpose of this project is to provide a more convenient user experience by s
 
 ## 3. 소개 영상
 
-추후 업데이트 예정
+차후에 추가 예정
 
 ---
 
@@ -51,7 +51,7 @@ The purpose of this project is to provide a more convenient user experience by s
 - Backend
 
 ```
-cd backend/server
+cd backend/
 pip install -r requirements.txt
 python run.py
 ```
@@ -59,44 +59,43 @@ python run.py
 - Frontend
 
 ```
-cd frontend/app
+cd frontend/
 npm i
 npm start
 ```
 
 - Crawler
-
+> Backend의 `requirements.txt`를 사용하여 라이브러리 설치
 ```
-cd backend/crawler
-python crawler.py
-
-# python joongonara.py "키워드" (아직 미사용)
+python backend/crawler/main.py 10 #크롤링할 페이지 수 
 ```
 
 - Run by Docker (통합 환경 실행)
+> 사전 준비 - Frontend Build
+```
+cd frontend/
+npm i
+npm run build
+```
 
+> 개발
 ```
 sudo docker-compose -f docker-compose-dev.yaml up --build -d
-
-# ES plugin 설치
-
-docker ps
-
-docker exec -it <ES_container_id> /bin/bash
-
-cd /usr/share/elasticsearch/bin/
-
-./elasticsearch-plugin install analysis-nori
-
-
+```
 * 페이지
 http://127.0.0.1:2000
 
 * API 문서
 http://127.0.0.1:2000/docs
 
-backend/crawler/crawler.py를 통해 크롤링 데이터 축적 후 API 사용 가능
+* Kibana
+http://127.0.0.1:5601
+
+> 배포
 ```
+sudo docker-compose -f docker-compose-prod.yaml up --build -d
+```
+`backend/crawler/main.py`를 통해 크롤링 데이터 축적 후 API 사용 가능
 
 ---
 
