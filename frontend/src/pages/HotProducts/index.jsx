@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import * as Style from './styles';
 import HotAPI from '../../api/hot';
+import SearchAPI from '../../api/search';
+import TopViews from '../../components/TopViews';
 
 function HotProducts() {
   const [hotProducts, setHotProducts] = useState([]);
+  const [page, setPage] = useState(0);
+  const [topViews, setTopViews] = useState([]);
 
   const search = async () => {
     const search_size = 5;
@@ -11,9 +15,18 @@ function HotProducts() {
     setHotProducts(response.data);
   };
 
+  const searchRecent = async () => {
+    const response = await SearchAPI.searchRecentQuery(page);
+    setTopViews(preTopViews => [...preTopViews, response.data.result]);
+  };
+
   useEffect(() => {
     search();
   }, []);
+
+  useEffect(() => {
+    searchRecent();
+  }, [page]);
 
   const conversion = key => {
     let retKeyword = '';
@@ -35,7 +48,10 @@ function HotProducts() {
 
   return (
     <Style.Container>
-      <Style.HotHeader>Hot Search</Style.HotHeader>
+      <Style.HotTitle>Hot Search</Style.HotTitle>
+      <Style.HotSubText>
+        해당 사이트에서 많이 검색된 제품들입니다.
+      </Style.HotSubText>
       <Style.HotsWrapper>
         {Object.entries(hotProducts).map(([key, value], index) => {
           return (
@@ -50,6 +66,14 @@ function HotProducts() {
           );
         })}
       </Style.HotsWrapper>
+      <Style.TopViewsWrapper>
+        <Style.HotTitle>Top Views</Style.HotTitle>
+        <Style.HotSubText>
+          최근 게시글 중, 조회수가 많은 매물입니다.
+        </Style.HotSubText>
+        <TopViews result={topViews} />
+      </Style.TopViewsWrapper>
+      <button onClick={() => setPage(page + 1)}>ff</button>
     </Style.Container>
   );
 }

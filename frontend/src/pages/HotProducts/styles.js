@@ -6,9 +6,14 @@ export const Container = styled.div`
   margin-top: 5rem;
 `;
 
-export const HotHeader = styled.div`
+export const HotTitle = styled.div`
   font-size: 2rem;
   font-weight: bold;
+`;
+
+export const HotSubText = styled.div`
+  color: #777777;
+  font-size: 0.9rem;
   padding-bottom: 2rem;
 `;
 
@@ -39,4 +44,8 @@ export const HotKeyword = styled.div`
   padding-top: 0.2rem;
   text-align: center;
   font-size: 0.9rem;
+`;
+
+export const TopViewsWrapper = styled.div`
+  padding-top: 3rem;
 `;

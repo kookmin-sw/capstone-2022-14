@@ -12,6 +12,10 @@ class SearchAPI {
   searchWeeklyPriceQuery(searchWord) {
     return axiosInstance.get(`/api/search/weekly/${searchWord}`);
   }
+
+  searchRecentQuery(page) {
+    return axiosInstance.get(`/api/search/recent/${page}`);
+  }
 }
 
 export default new SearchAPI();
