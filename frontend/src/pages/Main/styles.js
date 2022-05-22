@@ -20,6 +20,7 @@ export const ListWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(6, 140px);
   grid-gap: 2rem;
+  padding-top: 7rem;
   place-content: space-evenly space-evenly;
   @media (max-width: 1047px) {
     grid-template-rows: repeat(2, 140px);

@@ -1,14 +1,28 @@
 import styled from 'styled-components';
 
+export const Container = styled.div`
+  display: flex;
+  align-items: center;
+  margin: auto;
+  background-color: #fff;
+  box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 8%);
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1030;
+`;
+
 export const HeaderWrapper = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  margin-bottom: 5rem;
+  max-width: 1200px;
 `;
 
-export const HeaderHome = styled.h1`
-  width: 200px;
+export const HeaderHome = styled.h2`
+  padding: 0.5rem;
+  margin: 1rem;
   font-family: 'NanumSquareExtraBold';
   display: flex;
   justify-content: center;
