@@ -32,6 +32,7 @@ export const HeaderHome = styled.h2`
 export const HeaderContents = styled.div`
   display: flex;
   flex-direction: row;
+  font-size: 0.9rem;
 `;
 
 export const HeaderContent = styled.div`

@@ -5,17 +5,18 @@ import * as Style from './styles';
 const Header = () => {
   const navigate = useNavigate();
 
-  const clickHome = () => {
-    navigate('/');
-  };
-
   return (
     <Style.Container>
       <Style.HeaderWrapper>
-        <Style.HeaderHome onClick={clickHome}>Eaten Apple</Style.HeaderHome>
+        <Style.HeaderHome onClick={() => navigate('/')}>
+          Eaten Apple
+        </Style.HeaderHome>
         <Style.HeaderContents>
-          <Style.HeaderContent onClick={clickHome}>home</Style.HeaderContent>
-          <Style.HeaderContent>contact</Style.HeaderContent>
+          <Style.HeaderContent onClick={() => navigate('/')}>
+            매물 검색
+          </Style.HeaderContent>
+          <Style.HeaderContent>가격추이 확인</Style.HeaderContent>
+          <Style.HeaderContent>인기매물 조회</Style.HeaderContent>
         </Style.HeaderContents>
       </Style.HeaderWrapper>
     </Style.Container>
