@@ -1,10 +1,10 @@
-from flask import request
-from flask_apispec import doc, use_kwargs
+from server.main import db
+from flask_apispec import doc
 from server.main.controllers.search import (
     API_CATEGORY,
     search_bp,
 )
-from server.utils.common import response_json_with_code
+from server.main.models.hot_products import HotProducts
 from server.main import create_app
 from elasticsearch import Elasticsearch
 import numpy as np
@@ -124,6 +124,13 @@ def paging(query, idx):
 
     # 키워드 검색
     results = es.search(index=index_name, body=search_query)
+
+    if HotProducts.isExistProduct(query) is None:
+        HotProducts.addProduct(query)
+    else:
+        HotProducts.increaseCount(query)
+
+    db.session.commit()
 
     return {"result": results["hits"]["hits"]}
 
