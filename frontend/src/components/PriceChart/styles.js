@@ -1,17 +1,8 @@
 import styled from 'styled-components';
 
-export const PriceChartWrapper = styled.div`
-  width: 90%;
-  margin: auto;
-  display: flex;
-  justify-content: flex-start;
-`;
-
 export const ChartWrapper = styled.div`
   width: 100%;
 `;
-
-export const PriceWrapper = styled.div``;
 
 export const PriceInfo = styled.div`
   margin: 1rem;

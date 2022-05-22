@@ -3,7 +3,7 @@ import 'chart.js/auto';
 import { Chart } from 'react-chartjs-2';
 import * as Style from './styles';
 
-function PriceChart({ result, query }) {
+function PriceChart({ result }) {
   const data = {
     labels: ['4주 전', '3주 전', '2주 전', '1주 전'],
     datasets: [
@@ -25,12 +25,9 @@ function PriceChart({ result, query }) {
   };
 
   return (
-    <Style.PriceChartWrapper>
-      <Style.ChartWrapper>
-        <h1>Price Chart</h1>
-        <Chart type="line" data={data} />
-      </Style.ChartWrapper>
-    </Style.PriceChartWrapper>
+    <Style.ChartWrapper>
+      <Chart type="line" data={data} />
+    </Style.ChartWrapper>
   );
 }
 

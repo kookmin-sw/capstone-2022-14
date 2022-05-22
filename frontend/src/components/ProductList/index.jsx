@@ -4,7 +4,6 @@ import { productSub } from './product';
 import LoadingSign from '../LoadingSign';
 import SearchAPI from '../../api/search';
 import SearchResult from '../SearchResult';
-import PriceChart from '../PriceChart';
 import useSearchQuery from '../../query/useSearchQuery';
 import { useInView } from 'react-intersection-observer';
 
@@ -13,16 +12,12 @@ function ProductList({ keyword }) {
   const [curQuery, setCurQuery] = useState('');
   const [isClicked, setIsClicked] = useState('');
   const [item, setItem] = useState('');
-  const [weeklyPrice, setWeeklyPrice] = useState(null);
 
   const itemCount = 100;
 
   const search = async query => {
     const response = await SearchAPI.searchPriceQuery(query, itemCount);
     setPrice(response.data);
-
-    const response2 = await SearchAPI.searchWeeklyPriceQuery(query);
-    setWeeklyPrice(response2.data);
 
     setCurQuery(query);
 
@@ -80,7 +75,6 @@ function ProductList({ keyword }) {
               </Style.ItemBtn>
             ))}
           </Style.ItemWrapper>
-          {/* {price ? <PriceChart result={weeklyPrice} query={curQuery} /> : null} */}
 
           {price ? (
             <SearchResult result={data} price={price} query={curQuery} />
