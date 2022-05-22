@@ -15,14 +15,41 @@ function HotProducts() {
     search();
   }, []);
 
+  const conversion = key => {
+    let retKeyword = '';
+    if (key.includes('MacBook')) {
+      retKeyword = 'macbook';
+    } else if (key.includes('iPhone')) {
+      retKeyword = 'iphone';
+    } else if (key.includes('iPad')) {
+      retKeyword = 'ipad';
+    } else if (key.includes('Series')) {
+      retKeyword = 'applewatch';
+    } else if (key.includes('AirPods')) {
+      retKeyword = 'airpods';
+    } else if (key.includes('Mac')) {
+      retKeyword = 'mac';
+    }
+    return retKeyword;
+  };
+
   return (
     <Style.Container>
-      <div>HotProducts</div>
-      {Object.entries(hotProducts).map(([key, value]) => (
-        <div>
-          {key} - {value}회
-        </div>
-      ))}
+      <Style.HotHeader>Hot Search</Style.HotHeader>
+      <Style.HotsWrapper>
+        {Object.entries(hotProducts).map(([key, value], index) => {
+          return (
+            <Style.HotWrapper key={index}>
+              <Style.HotImg
+                src={`${process.env.PUBLIC_URL}/images/${conversion(key)}.png`}
+              />
+              <Style.HotKeyword>
+                {index + 1}. {key}
+              </Style.HotKeyword>
+            </Style.HotWrapper>
+          );
+        })}
+      </Style.HotsWrapper>
     </Style.Container>
   );
 }
