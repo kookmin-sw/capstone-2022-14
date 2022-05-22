@@ -79,6 +79,7 @@ def result(query):
     search_query = {
         "from": 0,
         "size": 100,
+        "sort": ["_score", {"date": "desc"}],
         "query": {"multi_match": {"query": products[query], "fields": ["title", "desc", "keyword"]}},
     }
 
@@ -117,6 +118,7 @@ def paging(query, idx):
     search_query = {
         "from": int(idx) * 20,
         "size": 20,
+        "sort": ["_score", {"date": "desc"}],
         "query": {"multi_match": {"query": products[query], "fields": ["title", "desc", "keyword"]}},
     }
 

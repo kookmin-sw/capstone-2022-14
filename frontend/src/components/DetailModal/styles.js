@@ -53,11 +53,25 @@ export const Main = styled.div`
   overflow-y: auto;
 `;
 
+export const TitleLinkWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 1.2rem 0;
+`;
+
 export const Title = styled.div`
   text-align: left;
-  margin: 1.2rem 0;
   font-size: 1.5rem;
   font-weight: bold;
+`;
+
+export const HyperLink = styled.a`
+  text-align: left;
+  padding: auto;
+  color: skyblue;
+  text-decoration: underline;
+  cursor: pointer;
+  margin-right: auto;
 `;
 
 export const InfoWrapper = styled.div`
