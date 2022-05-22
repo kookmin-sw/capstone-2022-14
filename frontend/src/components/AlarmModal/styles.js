@@ -24,7 +24,7 @@ export const Background = styled.div`
 
 export const Content = styled.div`
   width: 50%;
-  height: 30%;
+  height: 40%;
   position: relative;
   background: #ffffff;
   border-radius: 0.3rem;
@@ -54,13 +54,35 @@ export const AlarmWrapper = styled.div`
 
 export const Header = styled.h1``;
 
+export const GuideText = styled.div`
+  font-size: 0.8rem;
+  color: #a3a3a3;
+  padding-bottom: 1rem;
+`;
+
 export const InputWrapper = styled.div`
   display: flex;
   flex-direction: row;
   margin-top: 0.2rem;
 `;
 
-export const inputText = styled.div``;
+export const InputItem = styled.input`
+  width: 200px;
+  height: 29px;
+  font-size: 1rem;
+  border: 1px solid #a3a3a3;
+  margin-top: 2px;
+  background-color: #fff;
+`;
+
+export const SelectBox = styled.select`
+  width: 200px;
+  margin-top: 1rem;
+  padding: 0.8em 0.5em;
+  border: 1px solid #999;
+  font-family: inherit;
+  border-radius: 0px;
+`;
 
 export const SubmitBtn = styled.button`
   position: absolute;
@@ -71,6 +93,7 @@ export const SubmitBtn = styled.button`
   color: white;
   border-radius: 2rem;
   background-color: #777777;
+  cursor: pointer;
 `;
 
 export const CloseBtn = styled.button`
