@@ -74,7 +74,20 @@ function DetailModal({ detail, onClose }) {
           />
         ) : null}
         <Style.Main>
-          <Style.Title>{detail.title}</Style.Title>
+          <Style.TitleLinkWrapper>
+            <Style.Title>{detail.title}</Style.Title>
+            <Style.HyperLink
+              href={
+                detail.market === 'Daangn'
+                  ? `https://www.daangn.com/articles/${detail.pid}`
+                  : `https://m.bunjang.co.kr/products/${detail.pid}`
+              }
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              매물 정보 바로가기
+            </Style.HyperLink>
+          </Style.TitleLinkWrapper>
           <Style.InfoWrapper>
             <Style.Price>{detail.price.toLocaleString('ko-KR')}원</Style.Price>
             <Style.UploadDate>{Unix_timestamp(detail.date)}</Style.UploadDate>
