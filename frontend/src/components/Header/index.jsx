@@ -15,7 +15,9 @@ const Header = () => {
           <Style.HeaderContent onClick={() => navigate('/')}>
             매물 검색
           </Style.HeaderContent>
-          <Style.HeaderContent>가격추이 확인</Style.HeaderContent>
+          <Style.HeaderContent onClick={() => navigate('/pricechart')}>
+            가격추이 확인
+          </Style.HeaderContent>
           <Style.HeaderContent>인기매물 조회</Style.HeaderContent>
         </Style.HeaderContents>
       </Style.HeaderWrapper>

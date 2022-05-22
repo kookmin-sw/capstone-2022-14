@@ -7,7 +7,7 @@ import * as Style from './styles';
 import AlarmModal from '../AlarmModal';
 
 function PriceChart({ result, query }) {
-  const [modalOn, setModalOn] = useState(false);
+  // const [modalOn, setModalOn] = useState(false);
 
   const data = {
     labels: ['4주 전', '3주 전', '2주 전', '1주 전'],
@@ -35,7 +35,7 @@ function PriceChart({ result, query }) {
         <h1>Price Chart</h1>
         <Chart type="line" data={data} />
       </Style.ChartWrapper>
-      <Style.PriceWrapper>
+      {/* <Style.PriceWrapper>
         <Button
           size="Large"
           color="secondary"
@@ -54,7 +54,7 @@ function PriceChart({ result, query }) {
           query={query}
           onClose={() => setModalOn(false)}
         />
-      )}
+      )} */}
     </Style.PriceChartWrapper>
   );
 }

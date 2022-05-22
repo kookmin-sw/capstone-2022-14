@@ -9,7 +9,6 @@ import {
   ScrollToTop,
 } from './styles';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
-import Introduction from '../../components/Introduction';
 
 const Main = () => {
   const { keyword } = useParams();
@@ -89,7 +88,6 @@ const Main = () => {
           <ArrowUpwardIcon></ArrowUpwardIcon>
         </ScrollToTop>
       ) : null}
-      <Introduction />
       <ListWrapper>
         {appleProducts.map(product => {
           return (

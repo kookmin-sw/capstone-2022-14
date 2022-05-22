@@ -8,7 +8,7 @@ export const PriceChartWrapper = styled.div`
 `;
 
 export const ChartWrapper = styled.div`
-  width: 80%;
+  width: 100%;
 `;
 
 export const PriceWrapper = styled.div``;

@@ -80,7 +80,8 @@ function ProductList({ keyword }) {
               </Style.ItemBtn>
             ))}
           </Style.ItemWrapper>
-          {price ? <PriceChart result={weeklyPrice} query={curQuery} /> : null}
+          {/* {price ? <PriceChart result={weeklyPrice} query={curQuery} /> : null} */}
+
           {price ? (
             <SearchResult result={data} price={price} query={curQuery} />
           ) : null}
