@@ -19,3 +19,19 @@ class HotProducts(db.Model):
     @staticmethod
     def increaseCount(query):
         db.session.query(HotProducts).filter_by(product=query).update({"count": HotProducts.count + 1})
+
+    @staticmethod
+    def getHotProducts(count):
+        products = (
+            db.session.query(HotProducts)
+            .filter(HotProducts.count > 0)
+            .order_by(HotProducts.count.desc())
+            .limit(count)
+            .all()
+        )
+        result = []
+
+        for product in products:
+            result.append({product.product: product.count})
+
+        return result
