@@ -49,3 +49,17 @@ export const HotKeyword = styled.div`
 export const TopViewsWrapper = styled.div`
   padding-top: 3rem;
 `;
+
+export const MoreBtn = styled.button`
+  font-size: 0.9rem;
+  padding: 0.7rem 1.5rem;
+  margin: auto;
+  margin-bottom: 4rem;
+  border: 0;
+  border-radius: 0.5rem;
+  background-color: #cccccc;
+  cursor: pointer;
+  :hover {
+    background-color: #777777;
+  }
+`;

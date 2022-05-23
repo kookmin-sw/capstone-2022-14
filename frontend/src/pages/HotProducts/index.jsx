@@ -73,7 +73,7 @@ function HotProducts() {
         </Style.HotSubText>
         <TopViews result={topViews} />
       </Style.TopViewsWrapper>
-      <button onClick={() => setPage(page + 1)}>ff</button>
+      <Style.MoreBtn onClick={() => setPage(page + 1)}>더보기</Style.MoreBtn>
     </Style.Container>
   );
 }
