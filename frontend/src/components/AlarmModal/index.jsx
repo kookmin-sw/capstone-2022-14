@@ -14,15 +14,15 @@ function AlarmModal({ onClose }) {
   }, []);
 
   const [alarmInfo, setAlarmInfo] = useState({
-    alarmPrice: '',
-    keyword: '',
+    email: '',
+    price: '',
   });
 
   // input 변경 감지
-  const handleKeywordChange = useCallback(e => {
+  const handleKeywordChange = e => {
     const { name, value } = e.target;
     setAlarmInfo({ ...alarmInfo, [name]: value });
-  }, []);
+  };
 
   const products = [
     'AirPods 1Gen',
@@ -96,8 +96,8 @@ function AlarmModal({ onClose }) {
             <Style.InputItem
               maxLength="100"
               type="text"
-              value={alarmInfo.alarmPrice}
-              name="alarmPrice"
+              value={alarmInfo.email}
+              name="email"
               onChange={handleKeywordChange}
               placeholder="이메일"
             />
@@ -106,15 +106,15 @@ function AlarmModal({ onClose }) {
             <Style.InputItem
               maxLength="100"
               type="text"
-              value={alarmInfo.keyword}
-              name="keyword"
+              value={alarmInfo.price}
+              name="price"
               onChange={handleKeywordChange}
               placeholder="가격"
             />
           </Style.InputWrapper>
           <Style.SelectBox name="keyword">
-            {products.map(item => {
-              return <option>{item}</option>;
+            {products.map((item, index) => {
+              return <option key={index}>{item}</option>;
             })}
           </Style.SelectBox>
           <Style.SubmitBtn>등록</Style.SubmitBtn>
