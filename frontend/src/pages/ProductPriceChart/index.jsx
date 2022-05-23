@@ -10,14 +10,14 @@ function ProductPriceChart() {
     'AirPods 3Gen',
     'AirPods Pro',
     'AirPods Max',
-    'AppleWatch Series 1',
-    'AppleWatch Series 2',
-    'AppleWatch Series 3',
-    'AppleWatch Series 4',
-    'AppleWatch Series 5',
-    'AppleWatch Series 6',
-    'AppleWatch Series 7',
-    'AppleWatch SE',
+    'Series 1',
+    'Series 2',
+    'Series 3',
+    'Series 4',
+    'Series 5',
+    'Series 6',
+    'Series 7',
+    'SE',
     'iPad',
     'iPad Air',
     'iPad mini',
@@ -82,7 +82,9 @@ function ProductPriceChart() {
         {products.map((item, index) => {
           return (
             <option key={index} value={index}>
-              {item}
+              {item.includes('Series') || item === 'SE'
+                ? 'AppleWatch ' + item
+                : item}
             </option>
           );
         })}
