@@ -65,6 +65,11 @@ products = {
     "MacBook Pro": "맥북 프로",
 }
 
+filter_keywords = ["케이스", "매입", "삽니다", "업체", "교환", "강화유리", "교신"]
+GLOBAL_LOWER_THRESHOLD = -0.5
+GLOBAL_UPPER_THRESHOLD = 0.9
+MINIMUM_PRICE = 50000
+
 
 @search_bp.route("/<path:query>", methods=["GET"])
 @doc(tags=[API_CATEGORY], summary="ES에 저장된 데이터 전체 검색", description="검색할 키워드를 parameter로 받아 ES에서 전체 검색")
@@ -119,7 +124,26 @@ def paging(query, idx):
         "from": int(idx) * 20,
         "size": 20,
         "sort": ["_score", {"date": "desc"}],
-        "query": {"multi_match": {"query": products[query], "fields": ["title", "desc", "keyword"]}},
+        "query": {
+            "bool": {
+                "must": {"multi_match": {"query": products[query], "fields": ["title", "desc", "keyword"]}},
+                "must_not": list(
+                    map(
+                        lambda keyword: {
+                            "multi_match": {"query": keyword, "fields": ["title", "desc", "keyword"]}
+                        },
+                        filter_keywords,
+                    )
+                ),
+                "filter": {
+                    "range": {
+                        "price": {
+                            "gte": MINIMUM_PRICE,
+                        }
+                    }
+                },
+            }
+        },
     }
 
     # 키워드 검색
@@ -150,9 +174,18 @@ def price(query, size):
         "query": {
             "bool": {
                 "must": {"multi_match": {"query": products[query], "fields": ["title", "desc", "keyword"]}},
-                "filter": {
-                    "range": {"date": {"gte": int(before_7days.timestamp()), "lt": int(now.timestamp())}}
-                },
+                "must_not": list(
+                    map(
+                        lambda keyword: {
+                            "multi_match": {"query": keyword, "fields": ["title", "desc", "keyword"]}
+                        },
+                        filter_keywords,
+                    )
+                ),
+                "filter": [
+                    {"range": {"date": {"gte": int(before_7days.timestamp()), "lt": int(now.timestamp())}}},
+                    {"range": {"price": {"gte": MINIMUM_PRICE}}},
+                ],
             }
         },
     }
@@ -167,8 +200,8 @@ def price(query, size):
     avg_price = np.mean(prices)
     std_price = np.std(prices)
 
-    lower_threshold = -0.1
-    upper_threshold = 0.9
+    lower_threshold = GLOBAL_LOWER_THRESHOLD
+    upper_threshold = GLOBAL_UPPER_THRESHOLD
 
     z_scores = (prices - avg_price) / std_price
 
@@ -207,12 +240,21 @@ def weekly(query):
     for g, l in zip(gte, lt):
         search_query = {
             "from": 0,
-            "size": 50,
+            "size": 100,
             "query": {
                 "bool": {
                     "must": {"multi_match": {"query": products[query], "fields": ["title", "desc", "keyword"]}},
+                    "must_not": list(
+                        map(
+                            lambda keyword: {
+                                "multi_match": {"query": keyword, "fields": ["title", "desc", "keyword"]}
+                            },
+                            filter_keywords,
+                        )
+                    ),
                     "filter": [
                         {"range": {"date": {"gte": int(g.timestamp()), "lt": int(l.timestamp())}}},
+                        {"range": {"price": {"gte": MINIMUM_PRICE}}},
                     ],
                 }
             },
@@ -229,8 +271,8 @@ def weekly(query):
         avg_price = np.mean(prices)
         std_price = np.std(prices)
 
-        lower_threshold = -0.1
-        upper_threshold = 0.9
+        lower_threshold = GLOBAL_LOWER_THRESHOLD
+        upper_threshold = GLOBAL_UPPER_THRESHOLD
 
         z_scores = (prices - avg_price) / std_price
 
