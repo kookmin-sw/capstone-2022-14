@@ -298,7 +298,7 @@ def recent(idx):
     search_query = {
         "from": int(idx) * 5,
         "size": 5,
-        "sort": ["_score", {"views": "desc"}],
+        "sort": ["_score", {"date": "desc"}, {"views": "desc"}],
         "query": {
             "bool": {
                 "must": {"match_all": {}},
@@ -315,6 +315,7 @@ def recent(idx):
                 ],
             }
         },
+
     }
 
     results = es.search(index=index_name, body=search_query)
