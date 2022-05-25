@@ -2,10 +2,12 @@ from daangn import DaangnCrawler
 from bunjang import BunjangCrawler
 from crawler import Crawler
 
-import sys, os, json
+import sys, os, datetime
 
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 from db.esstore import EsStore
+
+from server.main.models.notification import Notification
 
 
 def get_keywords(file_name="keywords.txt"):
@@ -49,13 +51,6 @@ if __name__ == "__main__":
     if len(sys.argv) > 1:
         crawl_pages = int(sys.argv[1])
 
-    isFirst = False
-    if not os.path.isfile("keywords_count.json"):
-        tmp = {"맥북": 0, "아이폰": 0, "아이패드": 0, "에어팟": 0, "애플워치": 0}
-        with open("keywords_count.json", "w", encoding="utf-8") as f:
-            json.dump(tmp, f, indent="\t", ensure_ascii=False)
-        isFirst = True
-
     # get crawling data and insert
     for keyword in crawl_keywords:
         print(f"{keyword} 크롤링 중..")
@@ -64,20 +59,50 @@ if __name__ == "__main__":
         for data in crawl_data:
             es_client.insert(data.__dict__, f"{data.market}_{data.pid}")
 
-        # # price notification
-        # with open("keywords_count.json", "r", encoding="utf-8") as f:
-        #     data = json.load(f)
-
-        # if es_client.count(keyword)["count"] > data[keyword] and not isFirst:
-        #     c = es_client.count(keyword)["count"] - data[keyword]
-
-        #     for i in range(c):
-        #         if crawl_data[i].price <= 150000:
-        #             print(f"{keyword} {crawl_data[i].price}원 알림 전송")
-
-        # data[keyword] = es_client.count(keyword)["count"]
-
-        # with open("keywords_count.json", "w", encoding="utf-8") as f:
-        #     json.dump(data, f, indent="\t", ensure_ascii=False)
-
     es_client.refresh()
+
+    filter_keywords = ["케이스", "매입", "삽니다", "업체", "교환", "강화유리", "교신"]
+    MINIMUM_PRICE = 50000
+
+    now = datetime.datetime.now()
+    before_40minutes = now - datetime.timedelta(minutes=40)
+
+    notifications = Notification.getNotification()
+
+    for notification in notifications:
+        search_query = {
+            "from": 0,
+            "size": 100,
+            "sort": [{"date": "desc"}],
+            "query": {
+                "bool": {
+                    "must": {
+                        "multi_match": {"query": notification.product, "fields": ["title", "desc", "keyword"]}
+                    },
+                    "must_not": list(
+                        map(
+                            lambda keyword: {
+                                "multi_match": {"query": keyword, "fields": ["title", "desc", "keyword"]}
+                            },
+                            filter_keywords,
+                        )
+                    ),
+                    "filter": [
+                        {
+                            "range": {
+                                "date": {"gte": int(before_40minutes.timestamp()), "lt": int(now.timestamp())}
+                            }
+                        },
+                        {"range": {"price": {"gte": MINIMUM_PRICE, "lte": notification.price}}},
+                    ],
+                }
+            },
+        }
+
+        results = es_client.search(search_query)
+
+        if len(results["hits"]["hits"]) == 0:
+            continue
+
+        # Send email
+        print(notification.email)

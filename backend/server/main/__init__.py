@@ -39,11 +39,13 @@ def create_app(config_filename=config_dir):
         from server.main.controllers.search import search_bp
         from server.main.controllers.img import image_bp
         from server.main.controllers.hot import hot_bp
+        from server.main.controllers.notification import noti_bp
 
         app.register_blueprint(search_bp)
         app.register_blueprint(admin_bp)
         app.register_blueprint(image_bp)
         app.register_blueprint(hot_bp)
+        app.register_blueprint(noti_bp)
         docs.register_existing_resources()
 
         # 스웨거에서 options 제거
