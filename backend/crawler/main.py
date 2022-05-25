@@ -65,7 +65,7 @@ if __name__ == "__main__":
     MINIMUM_PRICE = 50000
 
     now = datetime.datetime.now()
-    before_40minutes = now - datetime.timedelta(minutes=40) # 크롤링 하는 시간이 있으니 여유를 두고 40분
+    before_40minutes = now - datetime.timedelta(minutes=40)  # 크롤링 하는 시간이 있으니 여유를 두고 40분
 
     notifications = Notification.getNotification()
 
@@ -73,7 +73,7 @@ if __name__ == "__main__":
         search_query = {
             "from": 0,
             "size": 100,
-            "sort": [{"date": "desc"}],
+            "sort": ["_score", {"date": "desc"}],
             "query": {
                 "bool": {
                     "must": {
