@@ -65,7 +65,7 @@ if __name__ == "__main__":
     MINIMUM_PRICE = 50000
 
     now = datetime.datetime.now()
-    before_40minutes = now - datetime.timedelta(minutes=40)
+    before_40minutes = now - datetime.timedelta(minutes=40) # 크롤링 하는 시간이 있으니 여유를 두고 40분
 
     notifications = Notification.getNotification()
 
@@ -104,5 +104,6 @@ if __name__ == "__main__":
         if len(results["hits"]["hits"]) == 0:
             continue
 
-        # Send email
+        # 최근 40분 내에 해당 키워드에 대한 사용자의 지정가에 맞는 상품이 있다면
+        # 이메일 전송
         print(notification.email)
