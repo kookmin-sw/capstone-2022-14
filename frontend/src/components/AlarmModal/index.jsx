@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import * as Style from './styles';
 import CloseIcon from '@mui/icons-material/Close';
+import NotificationAPI from '../../api/notification';
 
 function AlarmModal({ onClose }) {
   const outModal = useRef();
@@ -18,10 +19,20 @@ function AlarmModal({ onClose }) {
     price: '',
   });
 
+  const [product, setProduct] = useState('AirPods 1Gen');
+
   // input 변경 감지
   const handleKeywordChange = e => {
     const { name, value } = e.target;
     setAlarmInfo({ ...alarmInfo, [name]: value });
+  };
+
+  const handleProductChange = e => {
+    if (e.target.value.includes('AppleWatch')) {
+      setProduct(e.target.value.split('AppleWatch ')[1]);
+    } else {
+      setProduct(e.target.value);
+    }
   };
 
   const products = [
@@ -112,12 +123,28 @@ function AlarmModal({ onClose }) {
               placeholder="가격"
             />
           </Style.InputWrapper>
-          <Style.SelectBox name="keyword">
+          <Style.SelectBox name="keyword" onChange={handleProductChange}>
             {products.map((item, index) => {
               return <option key={index}>{item}</option>;
             })}
           </Style.SelectBox>
-          <Style.SubmitBtn>등록</Style.SubmitBtn>
+          <Style.SubmitBtn
+            onClick={() => {
+              NotificationAPI.notificationSubmit(
+                alarmInfo.email,
+                alarmInfo.price,
+                product,
+              )
+                .then(() => {
+                  alert(product + ' 등록 성공');
+                })
+                .catch(() => {
+                  alert('오류 발생');
+                });
+            }}
+          >
+            등록
+          </Style.SubmitBtn>
         </Style.AlarmWrapper>
         <Style.CloseBtn>
           <CloseIcon
