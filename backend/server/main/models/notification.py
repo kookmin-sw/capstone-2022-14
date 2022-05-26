@@ -16,5 +16,11 @@ class Notification(db.Model):
     @staticmethod
     def getNotification():
         notifications = db.session.query(Notification).all()
-        return notifications
+        result = []
 
+        for notification in notifications:
+            result.append(
+                {"email": notification.email, "product": notification.product, "price": notification.price}
+            )
+
+        return result

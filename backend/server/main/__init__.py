@@ -10,10 +10,7 @@ db = SQLAlchemy()
 migrate = Migrate()
 
 base_dir = os.getcwd()
-if "backend" in base_dir or "app" in base_dir:
-    config_dir = os.path.abspath(os.path.join(base_dir, "server", "main", "server.cfg"))
-else:
-    config_dir = os.path.abspath(os.path.join(base_dir, "backend", "server", "main", "server.cfg"))
+config_dir = os.path.abspath(os.path.join(base_dir, "server", "main", "server.cfg"))
 
 
 def create_app(config_filename=config_dir):

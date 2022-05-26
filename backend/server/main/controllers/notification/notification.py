@@ -76,3 +76,9 @@ def submit(email, product, price):
         return response_json_with_code(result={"email": email, "product": product, "price": price})
     else:
         return response_json_with_code(res_code="400", result="Wrong product")
+
+
+@noti_bp.route("/list", methods=["GET"])
+@doc(tags=[API_CATEGORY], summary="알림 등록 리스트 리턴", description="알림 등록 리스트 리턴")
+def notification():
+    return Notification.getNotification()
