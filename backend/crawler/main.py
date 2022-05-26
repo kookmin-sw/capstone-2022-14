@@ -5,7 +5,7 @@ from crawler import Crawler
 import smtplib  # 이메일 전송 관련 라이브러리
 from email.mime.text import MIMEText
 
-import sys, os, datetime, requests, re
+import sys, os, datetime, requests, re, json
 
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 from db.esstore import EsStore
@@ -28,11 +28,18 @@ def get_keywords(file_name="keywords.txt"):
 
 
 def email_send(email, content):
+    with open("email_account.json", "r") as f:
+        json_data = json.load(f)
+        smtp_user_id = json_data["smtp_user_id"]
+        smtp_user_pw = json_data["smtp_user_pw"]
+        smtp_server = json_data["smtp_server"]
+        smtp_port = json_data["smtp_port"]
+
     smtp_info = {
-        "smtp_server": "smtp.naver.com",  # SMTP 서버 주소
-        "smtp_user_id": "",
-        "smtp_user_pw": "",
-        "smtp_port": 587,  # SMTP 서버 포트
+        "smtp_server": smtp_server,  # SMTP 서버 주소
+        "smtp_user_id": smtp_user_id,
+        "smtp_user_pw": smtp_user_pw,
+        "smtp_port": smtp_port,  # SMTP 서버 포트
     }
     msg = MIMEText(content)
     msg["Subject"] = "지정가 알림 입니다."  # 메일 제목
@@ -92,7 +99,7 @@ if __name__ == "__main__":
     now = datetime.datetime.now()
     before_40minutes = now - datetime.timedelta(minutes=40)  # 크롤링 하는 시간이 있으니 여유를 두고 40분
 
-    notifications = requests.get("http://127.0.0.1:2000/api/notification/list")
+    notifications = requests.get("http://127.0.0.1/api/notification/list")
 
     # 이메일 유효성 검사
     p = re.compile("^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$")

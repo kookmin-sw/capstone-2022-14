@@ -173,3 +173,4 @@ scheduler.sh.log
 kakao_api.json
 backend/server/main/server.cfg
 backend/migrations
+email_account.json
