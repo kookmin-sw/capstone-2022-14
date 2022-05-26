@@ -298,8 +298,24 @@ def recent(idx):
     search_query = {
         "from": int(idx) * 5,
         "size": 5,
-        "sort": ["_score", {"views": "desc"}],
-        "query": {"match_all": {}},
+        "sort": ["_score", {"date": "desc"}, {"views": "desc"}],
+        "query": {
+            "bool": {
+                "must": {"match_all": {}},
+                "must_not": list(
+                    map(
+                        lambda keyword: {
+                            "multi_match": {"query": keyword, "fields": ["title", "desc", "keyword"]}
+                        },
+                        filter_keywords,
+                    )
+                ),
+                "filter": [
+                    {"range": {"price": {"gte": MINIMUM_PRICE}}},
+                ],
+            }
+        },
+
     }
 
     results = es.search(index=index_name, body=search_query)
