@@ -12,13 +12,19 @@ The purpose of this project is to provide a more convenient user experience by s
 
 ---
 
-## 3. 소개 영상
+## 3. 포스터
 
-차후에 추가 예정
+![다운로드](https://user-images.githubusercontent.com/26023759/170633046-2f6d6ff1-4e58-4022-8e9b-6b48156bffa5.png)
 
 ---
 
-## 4. 팀 소개
+## 4. 시연 영상
+
+[보러가기](https://www.youtube.com/watch?v=_poqCcyFmUc&feature=emb_title)
+
+---
+
+## 5. 팀 소개
 
 **이준석(팀장)**
 
@@ -46,7 +52,7 @@ The purpose of this project is to provide a more convenient user experience by s
 
 ---
 
-## 5. 사용법
+## 6. 사용법
 
 - Backend
 
@@ -99,7 +105,7 @@ sudo docker-compose -f docker-compose-prod.yaml up --build -d
 
 ---
 
-## 6. 문서
+## 7. 문서
 
 - 중간보고서
 
@@ -108,3 +114,7 @@ sudo docker-compose -f docker-compose-prod.yaml up --build -d
 - 중간발표자료
 
   - [바로가기](https://github.com/kookmin-sw/capstone-2022-14/blob/master/docs/팀14-중간발표자료.pdf)
+
+- 최종발표자료
+
+  - [바로가기](https://github.com/kookmin-sw/capstone-2022-14/blob/master/docs/팀14-최종발표자료.pdf)
