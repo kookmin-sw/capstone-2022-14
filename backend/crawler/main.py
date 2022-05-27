@@ -161,5 +161,9 @@ if __name__ == "__main__":
                 content += f"제목: {result['_source']['title']}\n가격: {result['_source']['price']}\n링크: {url}\n\n"
 
             email_send(notification["email"], content)
+
+            requests.delete(
+                f"http://127.0.0.1/api/notification/remove/{notification['email']}/{notification['product']}"
+            )
         else:
             print("Wrong email")

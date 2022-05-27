@@ -82,3 +82,11 @@ def submit(email, product, price):
 @doc(tags=[API_CATEGORY], summary="알림 등록 리스트 리턴", description="알림 등록 리스트 리턴")
 def notification():
     return Notification.getNotification()
+
+
+@noti_bp.route("/remove/<path:email>/<path:product>", methods=["DELETE"])
+@doc(tags=[API_CATEGORY], summary="알림 등록 리스트 삭제", description="알림 등록 리스트 삭제")
+def remove_notification(email, product):
+    Notification.removeNotification(email, product)
+    db.session.commit()
+    return response_json_with_code(result="Removed")

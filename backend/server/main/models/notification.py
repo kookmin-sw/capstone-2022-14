@@ -24,3 +24,7 @@ class Notification(db.Model):
             )
 
         return result
+
+    @staticmethod
+    def removeNotification(email, product):
+        Notification.query.filter((Notification.email == email) & (Notification.product == product)).delete()
